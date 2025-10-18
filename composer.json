@@ -1,0 +1,47 @@
+{
+  "name": "martijnvdb/type-vault",
+  "description": "Validated types for PHP: Email, UUID, URL, and more",
+  "version": "1.0.0",
+  "type": "library",
+  "keywords": [
+    "validation",
+    "utility-types",
+    "type-safe",
+    "immutable",
+    "normalized-values",
+    "uuid",
+    "url",
+    "email",
+    "color",
+    "date-time",
+    "date-only",
+    "time-only",
+    "collection",
+    "value-object",
+    "runtime-validation",
+    "type-vault",
+    "data-modeling",
+    "strict-types",
+    "typed-collection"
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Martijnvdb\\TypeVault\\": "src/"
+    }
+  },
+  "homepage": "https://github.com/martijnvdb87/type-vault-php",
+  "readme": "README.md",
+  "authors": [
+    {
+      "name": "Martijn van den Bosch",
+      "email": "martijn_van_den_bosch@hotmail.com",
+      "homepage": "https://martijnvandenbosch.com",
+      "role": "Developer"
+    }
+  ],
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^4.0",
+    "phpunit/phpunit": "^12.4.1"
+  }
+}
