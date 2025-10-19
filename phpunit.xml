@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-    colors="true"
-    verbose="true"
-    stopOnFailure="false">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php"
+    colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.4/phpunit.xsd"
+    cacheDirectory=".phpunit.cache">
+    <coverage>
+        <report>
+            <clover outputFile="build/logs/clover.xml" />
+        </report>
+    </coverage>
     <testsuites>
-        <testsuite name="TypeVault Test Suite">
+        <testsuite name="Unit">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <logging />
+    <source>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </source>
 </phpunit>

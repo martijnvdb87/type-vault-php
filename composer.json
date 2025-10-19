@@ -30,6 +30,11 @@
       "Martijnvdb\\TypeVault\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Martijnvdb\\TypeVault\\Tests\\": "tests/"
+    }
+  },
   "homepage": "https://github.com/martijnvdb87/type-vault-php",
   "readme": "README.md",
   "authors": [
@@ -42,6 +47,11 @@
   ],
   "require-dev": {
     "squizlabs/php_codesniffer": "^4.0",
-    "phpunit/phpunit": "^12.4.1"
+    "phpunit/phpunit": "^12.4.1",
+    "phpstan/phpstan": "^2.1"
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse",
+    "test": "phpunit"
   }
 }
