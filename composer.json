@@ -48,7 +48,8 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "^4.0",
     "phpunit/phpunit": "^12.4.1",
-    "phpstan/phpstan": "^2.1"
+    "phpstan/phpstan": "^2.1",
+    "friendsofphp/php-cs-fixer": "^3.89"
   },
   "scripts": {
     "phpstan": "phpstan analyse",
