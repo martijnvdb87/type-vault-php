@@ -52,7 +52,8 @@
     "friendsofphp/php-cs-fixer": "^3.89"
   },
   "scripts": {
-    "phpstan": "phpstan analyse",
+    "check": "composer lint && composer test",
+    "lint": "phpstan analyse",
     "test": "phpunit"
   }
 }
