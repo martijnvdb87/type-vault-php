@@ -4,10 +4,19 @@ namespace Martijnvdb\TypeVault\Types;
 
 use Martijnvdb\TypeVault\TypeVaultValidationError;
 
+class TypeOptions
+{
+    public function __construct(
+        public bool $nullable = false,
+        public bool $immutable = false
+    ) {
+        //
+    }
+}
+
 abstract class Type
 {
-    private bool $immutable = false;
-    private bool $nullable = false;
+    private TypeOptions $options;
 
     public mixed $value {
         get => $this->dangerouslyModifyGetValue($this->value);
@@ -33,19 +42,20 @@ abstract class Type
         }
     }
 
-    public function __construct(mixed $value)
+    public function __construct(mixed $value, TypeOptions | null $options = null)
     {
+        $this->options = $options ?? new TypeOptions();
         $this->value = $value;
     }
 
     public function isNullable(): bool
     {
-        return $this->nullable;
+        return $this->options->nullable;
     }
 
     public function isImmutable(): bool
     {
-        return $this->immutable;
+        return $this->options->immutable;
     }
 
     protected function assertMutable(): void
