@@ -10,8 +10,6 @@ class Email extends BaseString
             return false;
         }
 
-        // TODO: validate email
-
-        return true;
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 }

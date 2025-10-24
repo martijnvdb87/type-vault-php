@@ -2,7 +2,7 @@
 
 namespace Martijnvdb\TypeVault\Types;
 
-use Martijnvdb\TypeVault\TypeVaultValidationError;
+use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 
 class TypeOptions
 {

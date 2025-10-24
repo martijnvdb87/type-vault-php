@@ -1,6 +1,6 @@
 <?php
 
-namespace Martijnvdb\TypeVault;
+namespace Martijnvdb\TypeVault\Errors;
 
 class TypeVaultValidationError extends \Exception
 {
