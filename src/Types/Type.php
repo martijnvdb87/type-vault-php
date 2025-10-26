@@ -17,12 +17,15 @@ class TypeOptions
 abstract class Type
 {
     private TypeOptions $options;
+    private bool $isInitialized = false;
 
     public mixed $value {
         get => $this->dangerouslyModifyGetValue($this->value);
 
         set(mixed $value) {
-            $this->assertMutable();
+            if ($this->isInitialized) {
+                $this->assertMutable();
+            }
 
             if ($value === null) {
                 $this->assertNullable();
@@ -46,6 +49,8 @@ abstract class Type
     {
         $this->options = $options ?? new TypeOptions();
         $this->value = $value;
+
+        $this->isInitialized = true;
     }
 
     public function isNullable(): bool

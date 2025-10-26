@@ -62,6 +62,24 @@ class EmailTest extends TestCase
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
     {
         $this->expectException(TypeVaultValidationError::class);
-        new Email(null);
+        new Email(null, new TypeOptions(nullable: false));
+    }
+
+    public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
+    {
+        $email = new Email('user@example.com', new TypeOptions(immutable: false));
+
+        $newEmail = 'new-email@example.com';
+
+        $email->value = $newEmail;
+        $this->assertEquals($newEmail, $email->value);
+    }
+
+    public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
+    {
+        $email = new Email('user@example.com', new TypeOptions(immutable: true));
+
+        $this->expectException(TypeVaultValidationError::class);
+        $email->value = 'new-email@example.com';
     }
 }
