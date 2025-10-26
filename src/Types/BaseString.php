@@ -7,9 +7,9 @@ namespace Martijnvdb\TypeVault\Types;
  */
 abstract class BaseString extends Type
 {
-    public function __construct(string $value)
+    public function __construct(string | null $value, TypeOptions | null $options = null)
     {
-        parent::__construct($value);
+        parent::__construct($value, $options);
     }
 
     protected function validate(mixed $value): bool

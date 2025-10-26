@@ -67,7 +67,7 @@ abstract class Type
 
     protected function assertNullable(): void
     {
-        if ($this->isNullable()) {
+        if (!$this->isNullable()) {
             throw new TypeVaultValidationError();
         }
     }

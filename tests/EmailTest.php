@@ -49,7 +49,19 @@ class EmailTest extends TestCase
         $this->expectException(TypeVaultValidationError::class);
 
         foreach ($values as $value) {
-            $email = new Email($value);
+            new Email($value);
         }
+    }
+
+    public function testItShouldAllowNullIfNullableIsSetToTrue(): void
+    {
+        $email = new Email(null, new TypeOptions(nullable: true));
+        $this->assertNull($email->value);
+    }
+
+    public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
+    {
+        $this->expectException(TypeVaultValidationError::class);
+        new Email(null);
     }
 }
