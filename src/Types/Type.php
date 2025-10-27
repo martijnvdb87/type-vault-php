@@ -93,4 +93,14 @@ abstract class Type
     }
 
     abstract protected function validate(mixed $value): bool;
+
+    public static function nullable(mixed $value): static
+    {
+        return new static($value, new TypeOptions(nullable: true));
+    }
+
+    public static function immutable(mixed $value): static
+    {
+        return new static($value, new TypeOptions(immutable: true));
+    }
 }

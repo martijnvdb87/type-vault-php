@@ -82,4 +82,16 @@ class EmailTest extends TestCase
         $this->expectException(TypeVaultValidationError::class);
         $email->value = 'new-email@example.com';
     }
+
+    public function testItShouldAllowNullIfNullableMethodIsUsed(): void
+    {
+        $email = Email::nullable(null);
+        $this->assertNull($email->value);
+    }
+
+    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed()
+    {
+        $this->expectException(TypeVaultValidationError::class);
+        Email::immutable('user@example.com')->value = 'new-email@example.com';
+    }
 }

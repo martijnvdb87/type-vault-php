@@ -16,4 +16,20 @@ abstract class BaseString extends Type
     {
         return is_string($value);
     }
+
+    /**
+     * @param string $value
+     */
+    public static function nullable(mixed $value): static
+    {
+        return new static($value, new TypeOptions(nullable: true));
+    }
+
+    /**
+     * @param string $value
+     */
+    public static function immutable(mixed $value): static
+    {
+        return new static($value, new TypeOptions(immutable: true));
+    }
 }
