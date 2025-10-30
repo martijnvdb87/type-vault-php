@@ -2,55 +2,57 @@
 
 namespace Martijnvdb\TypeVault\Types;
 
+use Martijnvdb\TypeVault\DTOs\ColorHexValueDTO;
+
 use function Martijnvdb\TypeVault\Utils\assertClamp;
 
 class ColorHex extends Color
 {
     public float $red {
-        get => $this->hexToNumberValues($this->value)['red'];
+        get => $this->hexToNumberValues($this->value)->red;
 
         set(mixed $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $value, green: $values['green'], blue: $values['blue'], alpha: $values['alpha']);
+            $this->value = $this->numberToHexString($values->copyWith(['red' => $value]));
         }
     }
 
     public float $green {
-        get => $this->hexToNumberValues($this->value)['green'];
+        get => $this->hexToNumberValues($this->value)->green;
 
         set(mixed $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $values['red'], green: $value, blue: $values['blue'], alpha: $values['alpha']);
+            $this->value = $this->numberToHexString($values->copyWith(['green' => $value]));
         }
     }
 
     public float $blue {
-        get => $this->hexToNumberValues($this->value)['blue'];
+        get => $this->hexToNumberValues($this->value)->blue;
 
         set(mixed $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $values['red'], green: $values['green'], blue: $value, alpha: $values['alpha']);
+            $this->value = $this->numberToHexString($values->copyWith(['blue' => $value]));
         }
     }
 
     public float $alpha {
-        get => $this->hexToNumberValues($this->value)['alpha'];
+        get => $this->hexToNumberValues($this->value)->alpha;
 
         set(mixed $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $values['red'], green: $values['green'], blue: $values['blue'], alpha: $value);
+            $this->value = $this->numberToHexString($values->copyWith(['alpha' => $value]));
         }
     }
 
@@ -107,13 +109,13 @@ class ColorHex extends Color
         return str_pad($hex, 2, '0', STR_PAD_LEFT);
     }
 
-    private function numberToHexString(float $red, float $green, float $blue, float $alpha): string
+    private function numberToHexString(ColorHexValueDTO $values): string
     {
         $parts = [
-            $this->numberToHex(assertClamp($red, min: 0, max: 255)),
-            $this->numberToHex(assertClamp($green, min: 0, max: 255)),
-            $this->numberToHex(assertClamp($blue, min: 0, max: 255)),
-            $this->numberToHex(assertClamp($alpha, min: 0, max: 255)),
+            $this->numberToHex(assertClamp($values->red, min: 0, max: 255)),
+            $this->numberToHex(assertClamp($values->green, min: 0, max: 255)),
+            $this->numberToHex(assertClamp($values->blue, min: 0, max: 255)),
+            $this->numberToHex(assertClamp($values->alpha, min: 0, max: 255)),
         ];
 
         $result = implode('', $parts);
@@ -121,25 +123,17 @@ class ColorHex extends Color
         return "#{$result}";
     }
 
-    /**
-     * @return array{red: float, green: float, blue: float, alpha: float}
-     */
-    private function hexToNumberValues(string | null $value): array
+    private function hexToNumberValues(string | null $value): ColorHexValueDTO
     {
         if ($value === null) {
-            return [
-                'red' => (float) 0,
-                'green' => (float) 0,
-                'blue' => (float) 0,
-                'alpha' => (float) 0,
-            ];
+            return new ColorHexValueDTO(red: 0, green: 0, blue: 0, alpha: 0);
         }
 
-        return [
-            'red' => $this->hexToNumber(substr($value, 1, 2)),
-            'green' => $this->hexToNumber(substr($value, 3, 2)),
-            'blue' => $this->hexToNumber(substr($value, 5, 2)),
-            'alpha' => $this->hexToNumber(substr($value, 7, 2)),
-        ];
+        return new ColorHexValueDTO(
+            red: $this->hexToNumber(substr($value, 1, 2)),
+            green: $this->hexToNumber(substr($value, 3, 2)),
+            blue: $this->hexToNumber(substr($value, 5, 2)),
+            alpha: $this->hexToNumber(substr($value, 7, 2)),
+        );
     }
 }
