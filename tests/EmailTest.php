@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class EmailTest extends TestCase
 {
-    private $values = [
+    /** @var string[] */
+    private array $values = [
         'user@example.com',
         'hello.world@domain.net',
         'newsletter+weekly@service.org',
@@ -89,7 +90,7 @@ class EmailTest extends TestCase
         $this->assertNull($email->value);
     }
 
-    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed()
+    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void
     {
         $this->expectException(TypeVaultValidationError::class);
         Email::immutable('user@example.com')->value = 'new-email@example.com';

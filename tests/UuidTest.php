@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class UuidTest extends TestCase
 {
-    private $values = [
+    /** @var string[] */
+    private array $values = [
         '00000000-0000-0000-0000-000000000000',
         '194d4a10-7e01-11f0-8de9-0242ac120002',
         '194d4aba-7e01-11f0-8de9-0242ac120002',

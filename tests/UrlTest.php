@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class UrlTest extends TestCase
 {
-    private $values = [
+    /** @var string[] */
+    private array $values = [
         'http://example.com',
         'https://example.com',
         'https://blog.example.com',
@@ -91,7 +92,7 @@ class UrlTest extends TestCase
         $this->assertNull($url->value);
     }
 
-    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed()
+    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void
     {
         $this->expectException(TypeVaultValidationError::class);
         Url::immutable('http://example.com')->value = 'https://blog.example.com';

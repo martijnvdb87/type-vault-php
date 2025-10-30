@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class TextTest extends TestCase
 {
-    private $values = [
+    /** @var string[] */
+    private array $values = [
         'foo',
         'bar',
         'baz',
@@ -78,7 +79,7 @@ class TextTest extends TestCase
         $this->assertNull($text->value);
     }
 
-    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed()
+    public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void
     {
         $this->expectException(TypeVaultValidationError::class);
         Text::immutable('foo')->value = 'bar';

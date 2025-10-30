@@ -3,7 +3,7 @@
 namespace Martijnvdb\TypeVault\Types;
 
 /**
- * @property string $value
+ * @property string|null $value
  */
 abstract class BaseString extends Type
 {

@@ -6,7 +6,7 @@ use function Martijnvdb\TypeVault\Utils\assertClamp;
 
 class ColorHex extends Color
 {
-    public mixed $red {
+    public float $red {
         get => $this->hexToNumberValues($this->value)['red'];
 
         set(mixed $value) {
@@ -18,7 +18,7 @@ class ColorHex extends Color
         }
     }
 
-    public mixed $green {
+    public float $green {
         get => $this->hexToNumberValues($this->value)['green'];
 
         set(mixed $value) {
@@ -26,11 +26,11 @@ class ColorHex extends Color
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $values['red'], green: $green, blue: $values['blue'], alpha: $values['alpha']);
+            $this->value = $this->numberToHexString(red: $values['red'], green: $value, blue: $values['blue'], alpha: $values['alpha']);
         }
     }
 
-    public mixed $blue {
+    public float $blue {
         get => $this->hexToNumberValues($this->value)['blue'];
 
         set(mixed $value) {
@@ -38,11 +38,11 @@ class ColorHex extends Color
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $values['red'], green: $values['green'], blue: $blue, alpha: $values['alpha']);
+            $this->value = $this->numberToHexString(red: $values['red'], green: $values['green'], blue: $value, alpha: $values['alpha']);
         }
     }
 
-    public mixed $alpha {
+    public float $alpha {
         get => $this->hexToNumberValues($this->value)['alpha'];
 
         set(mixed $value) {
@@ -50,7 +50,7 @@ class ColorHex extends Color
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString(red: $values['red'], green: $values['green'], blue: $values['blue'], alpha: $alpha);
+            $this->value = $this->numberToHexString(red: $values['red'], green: $values['green'], blue: $values['blue'], alpha: $value);
         }
     }
 
@@ -93,16 +93,15 @@ class ColorHex extends Color
         return $value;
     }
 
-    private function hexToNumber(string $hex)
+    private function hexToNumber(string $hex): float
     {
-        $hex = $hex ?? '00';
+        $hex = $hex === '' ? '00' : $hex;
 
         return intval($hex, 16) % 256;
     }
 
-    private function numberToHex(float $number)
+    private function numberToHex(float $number): string
     {
-        $number = $number ?? 0;
         $hex = dechex($number % 256);
 
         return str_pad($hex, 2, '0', STR_PAD_LEFT);
@@ -122,14 +121,17 @@ class ColorHex extends Color
         return "#{$result}";
     }
 
-    private function hexToNumberValues(string | null $value)
+    /**
+     * @return array{red: float, green: float, blue: float, alpha: float}
+     */
+    private function hexToNumberValues(string | null $value): array
     {
         if ($value === null) {
             return [
-                'red' => 0,
-                'green' => 0,
-                'blue' => 0,
-                'alpha' => 0,
+                'red' => (float) 0,
+                'green' => (float) 0,
+                'blue' => (float) 0,
+                'alpha' => (float) 0,
             ];
         }
 

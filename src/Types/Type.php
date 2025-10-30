@@ -45,7 +45,7 @@ abstract class Type
         }
     }
 
-    public function __construct(mixed $value, TypeOptions | null $options = null)
+    final public function __construct(mixed $value, TypeOptions | null $options = null)
     {
         $this->options = $options ?? new TypeOptions();
         $this->value = $value;
