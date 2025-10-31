@@ -2,9 +2,9 @@
 
 namespace Martijnvdb\TypeVault\Tests;
 
+use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 use Martijnvdb\TypeVault\Types\Email;
-use Martijnvdb\TypeVault\Types\TypeOptions;
 use PHPUnit\Framework\TestCase;
 
 class EmailTest extends TestCase
@@ -56,19 +56,19 @@ class EmailTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $email = new Email(null, new TypeOptions(nullable: true));
+        $email = new Email(null, new TypeOptionsDTO(nullable: true));
         $this->assertNull($email->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
     {
         $this->expectException(TypeVaultValidationError::class);
-        new Email(null, new TypeOptions(nullable: false));
+        new Email(null, new TypeOptionsDTO(nullable: false));
     }
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $email = new Email('user@example.com', new TypeOptions(immutable: false));
+        $email = new Email('user@example.com', new TypeOptionsDTO(immutable: false));
 
         $newEmail = 'new-email@example.com';
 
@@ -78,7 +78,7 @@ class EmailTest extends TestCase
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $email = new Email('user@example.com', new TypeOptions(immutable: true));
+        $email = new Email('user@example.com', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
         $email->value = 'new-email@example.com';

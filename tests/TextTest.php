@@ -2,9 +2,9 @@
 
 namespace Martijnvdb\TypeVault\Tests;
 
+use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 use Martijnvdb\TypeVault\Types\Text;
-use Martijnvdb\TypeVault\Types\TypeOptions;
 use PHPUnit\Framework\TestCase;
 
 class TextTest extends TestCase
@@ -45,19 +45,19 @@ class TextTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $text = new Text(null, new TypeOptions(nullable: true));
+        $text = new Text(null, new TypeOptionsDTO(nullable: true));
         $this->assertNull($text->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
     {
         $this->expectException(TypeVaultValidationError::class);
-        new Text(null, new TypeOptions(nullable: false));
+        new Text(null, new TypeOptionsDTO(nullable: false));
     }
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $text = new Text('foo', new TypeOptions(immutable: false));
+        $text = new Text('foo', new TypeOptionsDTO(immutable: false));
 
         $newText = 'bar';
 
@@ -67,7 +67,7 @@ class TextTest extends TestCase
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $text = new Text('foo', new TypeOptions(immutable: true));
+        $text = new Text('foo', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
         $text->value = 'bar';

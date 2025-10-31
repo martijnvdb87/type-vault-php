@@ -2,9 +2,9 @@
 
 namespace Martijnvdb\TypeVault\Tests;
 
+use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 use Martijnvdb\TypeVault\Types\Uuid;
-use Martijnvdb\TypeVault\Types\TypeOptions;
 use PHPUnit\Framework\TestCase;
 
 class UuidTest extends TestCase
@@ -53,19 +53,19 @@ class UuidTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $uuid = new Uuid(null, new TypeOptions(nullable: true));
+        $uuid = new Uuid(null, new TypeOptionsDTO(nullable: true));
         $this->assertNull($uuid->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
     {
         $this->expectException(TypeVaultValidationError::class);
-        new Uuid(null, new TypeOptions(nullable: false));
+        new Uuid(null, new TypeOptionsDTO(nullable: false));
     }
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $uuid = new Uuid($this->values[0], new TypeOptions(immutable: false));
+        $uuid = new Uuid($this->values[0], new TypeOptionsDTO(immutable: false));
 
         $newUuid = $this->values[1];
 
@@ -75,7 +75,7 @@ class UuidTest extends TestCase
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $uuid = new Uuid($this->values[0], new TypeOptions(immutable: true));
+        $uuid = new Uuid($this->values[0], new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
         $uuid->value = $this->values[1];

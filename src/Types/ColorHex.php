@@ -2,7 +2,7 @@
 
 namespace Martijnvdb\TypeVault\Types;
 
-use Martijnvdb\TypeVault\DTOs\ColorHexValueDTO;
+use Martijnvdb\TypeVault\DTOs\ColorHexValuesDTO;
 
 use function Martijnvdb\TypeVault\Utils\assertClamp;
 
@@ -109,7 +109,7 @@ class ColorHex extends Color
         return str_pad($hex, 2, '0', STR_PAD_LEFT);
     }
 
-    private function numberToHexString(ColorHexValueDTO $values): string
+    private function numberToHexString(ColorHexValuesDTO $values): string
     {
         $parts = [
             $this->numberToHex(assertClamp($values->red, min: 0, max: 255)),
@@ -123,13 +123,13 @@ class ColorHex extends Color
         return "#{$result}";
     }
 
-    private function hexToNumberValues(string | null $value): ColorHexValueDTO
+    private function hexToNumberValues(string | null $value): ColorHexValuesDTO
     {
         if ($value === null) {
-            return new ColorHexValueDTO(red: 0, green: 0, blue: 0, alpha: 0);
+            return new ColorHexValuesDTO(red: 0, green: 0, blue: 0, alpha: 0);
         }
 
-        return new ColorHexValueDTO(
+        return new ColorHexValuesDTO(
             red: $this->hexToNumber(substr($value, 1, 2)),
             green: $this->hexToNumber(substr($value, 3, 2)),
             blue: $this->hexToNumber(substr($value, 5, 2)),

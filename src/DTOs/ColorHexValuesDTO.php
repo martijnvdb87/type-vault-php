@@ -2,7 +2,7 @@
 
 namespace Martijnvdb\TypeVault\DTOs;
 
-final readonly class ColorHexValueDTO extends DTO
+final readonly class ColorHexValuesDTO extends DTO
 {
     public function __construct(
         public float $red,

@@ -2,21 +2,12 @@
 
 namespace Martijnvdb\TypeVault\Types;
 
+use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
-
-class TypeOptions
-{
-    public function __construct(
-        public bool $nullable = false,
-        public bool $immutable = false
-    ) {
-        //
-    }
-}
 
 abstract class Type
 {
-    private TypeOptions $options;
+    private TypeOptionsDTO $options;
     private bool $isInitialized = false;
 
     public mixed $value {
@@ -45,9 +36,9 @@ abstract class Type
         }
     }
 
-    final public function __construct(mixed $value, TypeOptions | null $options = null)
+    final public function __construct(mixed $value, TypeOptionsDTO | null $options = null)
     {
-        $this->options = $options ?? new TypeOptions();
+        $this->options = $options ?? new TypeOptionsDTO();
         $this->value = $value;
 
         $this->isInitialized = true;
@@ -96,11 +87,11 @@ abstract class Type
 
     public static function nullable(mixed $value): static
     {
-        return new static($value, new TypeOptions(nullable: true));
+        return new static($value, new TypeOptionsDTO(nullable: true));
     }
 
     public static function immutable(mixed $value): static
     {
-        return new static($value, new TypeOptions(immutable: true));
+        return new static($value, new TypeOptionsDTO(immutable: true));
     }
 }

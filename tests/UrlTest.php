@@ -2,9 +2,9 @@
 
 namespace Martijnvdb\TypeVault\Tests;
 
+use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 use Martijnvdb\TypeVault\Types\Url;
-use Martijnvdb\TypeVault\Types\TypeOptions;
 use PHPUnit\Framework\TestCase;
 
 class UrlTest extends TestCase
@@ -58,19 +58,19 @@ class UrlTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $url = new Url(null, new TypeOptions(nullable: true));
+        $url = new Url(null, new TypeOptionsDTO(nullable: true));
         $this->assertNull($url->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
     {
         $this->expectException(TypeVaultValidationError::class);
-        new Url(null, new TypeOptions(nullable: false));
+        new Url(null, new TypeOptionsDTO(nullable: false));
     }
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $url = new Url('http://example.com', new TypeOptions(immutable: false));
+        $url = new Url('http://example.com', new TypeOptionsDTO(immutable: false));
 
         $newUrl = 'https://blog.example.com';
 
@@ -80,7 +80,7 @@ class UrlTest extends TestCase
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $url = new Url('http://example.com', new TypeOptions(immutable: true));
+        $url = new Url('http://example.com', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
         $url->value = 'https://blog.example.com';
