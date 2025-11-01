@@ -4,55 +4,53 @@ namespace Martijnvdb\TypeVault\Types;
 
 use Martijnvdb\TypeVault\DTOs\ColorHexValuesDTO;
 
-use function Martijnvdb\TypeVault\Utils\assertClamp;
-
 class ColorHex extends Color
 {
-    public float $red {
+    public int $red {
         get => $this->hexToNumberValues($this->value)->red;
 
-        set(mixed $value) {
+        set(int $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString($values->copyWith(['red' => $value]));
+            $this->value = $values->copyWith(['red' => $value])->__toString();
         }
     }
 
-    public float $green {
+    public int $green {
         get => $this->hexToNumberValues($this->value)->green;
 
-        set(mixed $value) {
+        set(int $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString($values->copyWith(['green' => $value]));
+            $this->value = $values->copyWith(['green' => $value])->__toString();
         }
     }
 
-    public float $blue {
+    public int $blue {
         get => $this->hexToNumberValues($this->value)->blue;
 
-        set(mixed $value) {
+        set(int $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString($values->copyWith(['blue' => $value]));
+            $this->value = $values->copyWith(['blue' => $value])->__toString();
         }
     }
 
-    public float $alpha {
+    public int $alpha {
         get => $this->hexToNumberValues($this->value)->alpha;
 
-        set(mixed $value) {
+        set(int $value) {
             $this->assertMutable();
 
             $values = $this->hexToNumberValues($this->value);
 
-            $this->value = $this->numberToHexString($values->copyWith(['alpha' => $value]));
+            $this->value = $values->copyWith(['alpha' => $value])->__toString();
         }
     }
 
@@ -95,32 +93,11 @@ class ColorHex extends Color
         return $value;
     }
 
-    private function hexToNumber(string $hex): float
+    private function hexToNumber(string $hex): int
     {
         $hex = $hex === '' ? '00' : $hex;
 
         return intval($hex, 16) % 256;
-    }
-
-    private function numberToHex(float $number): string
-    {
-        $hex = dechex($number % 256);
-
-        return str_pad($hex, 2, '0', STR_PAD_LEFT);
-    }
-
-    private function numberToHexString(ColorHexValuesDTO $values): string
-    {
-        $parts = [
-            $this->numberToHex(assertClamp($values->red, min: 0, max: 255)),
-            $this->numberToHex(assertClamp($values->green, min: 0, max: 255)),
-            $this->numberToHex(assertClamp($values->blue, min: 0, max: 255)),
-            $this->numberToHex(assertClamp($values->alpha, min: 0, max: 255)),
-        ];
-
-        $result = implode('', $parts);
-
-        return "#{$result}";
     }
 
     private function hexToNumberValues(string | null $value): ColorHexValuesDTO

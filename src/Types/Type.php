@@ -32,7 +32,7 @@ abstract class Type
                 throw new TypeVaultValidationError();
             }
 
-            $this->value = $this->dangerouslyModifySetValue($value);
+            $this->value = $this->dangerouslyModifySetValue($modifiedValue);
         }
     }
 
