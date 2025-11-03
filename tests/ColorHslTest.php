@@ -85,17 +85,142 @@ class ColorHslTest extends TestCase
         }
     }
 
+    public function testItShouldReturnTheCorrectColorValues(): void
+    {
+        foreach ($this->values as $value) {
+            $color = new ColorHsl($value['input']);
+            $this->assertEquals($value['hue'], $color->hue);
+            $this->assertEquals($value['saturation'], $color->saturation);
+            $this->assertEquals($value['lightness'], $color->lightness);
+            $this->assertEquals($value['alpha'], $color->alpha);
+        }
+    }
+
+    public function testItCanUpdateTheColorValues(): void
+    {
+        foreach ($this->values as $value) {
+            $color = ColorHsl::nullable();
+
+            $color->hue = $value['hue'];
+            $color->saturation = $value['saturation'];
+            $color->lightness = $value['lightness'];
+            $color->alpha = $value['alpha'];
+
+            $this->assertEquals($value['output'], $color->value);
+        }
+    }
+
+    public function testItCanModifyColorValues(): void
+    {
+        $color = new ColorHsl('hsl(0, 0, 0)');
+
+        $color->hue = 360;
+        $color->saturation = 100;
+        $color->lightness = 100;
+        $color->alpha = 100;
+
+        $this->assertEquals('hsl(360deg 100% 100% / 100%)', $color->value);
+
+        $color->hue = 0;
+        $color->saturation = 0;
+        $color->lightness = 0;
+        $color->alpha = 0;
+
+        $this->assertEquals('hsl(0deg 0% 0% / 0%)', $color->value);
+
+        $color->hue = 180;
+        $color->saturation = 50;
+        $color->lightness = 50;
+        $color->alpha = 50;
+
+        $this->assertEquals('hsl(180deg 50% 50% / 50%)', $color->value);
+
+        $color->hue = 25;
+        $color->saturation = 50;
+        $color->lightness = 100;
+        $color->alpha = 10;
+
+        $this->assertEquals('hsl(25deg 50% 100% / 10%)', $color->value);
+
+        $color->hue = 12.5;
+        $color->saturation = 45.6;
+        $color->lightness = 7.89;
+        $color->alpha = 1.23;
+
+        $this->assertEquals('hsl(12.5deg 45.6% 7.89% / 1.23%)', $color->value);
+    }
+
+    public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
+    {
+        $color = new ColorHsl('hsl(0deg, 0%, 0%, 0)');
+
+        try {
+            $color->hue = 361;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->saturation = 101;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->lightness = 101;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->alpha = 101;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->hue = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->saturation = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->lightness = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->alpha = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+    }
+
     public function testItShouldThrowExceptionWhenValueIsInvalid(): void
     {
         $values = [
-            'foo',
-            'foo@example',
-            'foo@example.',
+            'example',
+            '#foo',
+            null,
             1,
             [],
             true,
             false,
-            null,
         ];
 
         $this->expectException(TypeVaultValidationError::class);

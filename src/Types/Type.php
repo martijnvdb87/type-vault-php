@@ -85,7 +85,7 @@ abstract class Type
 
     abstract protected function validate(mixed $value): bool;
 
-    public static function nullable(mixed $value): static
+    public static function nullable(mixed $value = null): static
     {
         return new static($value, new TypeOptionsDTO(nullable: true));
     }

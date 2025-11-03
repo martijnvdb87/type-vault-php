@@ -28,6 +28,7 @@ readonly class DTO
             $props[$property] = $value;
         }
 
+        /** @phpstan-ignore-next-line */
         return new static(...$props);
     }
 }
