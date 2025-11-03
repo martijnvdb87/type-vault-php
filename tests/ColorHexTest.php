@@ -113,6 +113,167 @@ class ColorHexTest extends TestCase
         }
     }
 
+    public function testItShouldReturnTheCorrectColorValues(): void
+    {
+        foreach ($this->values as $value) {
+            $color = new ColorHex($value['input']);
+            $this->assertEquals($value['red'], $color->red);
+            $this->assertEquals($value['green'], $color->green);
+            $this->assertEquals($value['blue'], $color->blue);
+            $this->assertEquals($value['alpha'], $color->alpha);
+        }
+    }
+
+    public function testItCanUpdateTheColorValues(): void
+    {
+        foreach ($this->values as $value) {
+            $color = ColorHex::nullable();
+
+            $color->red = $value['red'];
+            $color->green = $value['green'];
+            $color->blue = $value['blue'];
+            $color->alpha = $value['alpha'];
+
+            $this->assertEquals($value['red'], $color->red);
+            $this->assertEquals($value['green'], $color->green);
+            $this->assertEquals($value['blue'], $color->blue);
+            $this->assertEquals($value['alpha'], $color->alpha);
+
+            $this->assertEquals($value['output'], $color->value);
+        }
+    }
+
+    public function itCanModifyColorValues(): void
+    {
+        $color = new ColorHex('#00000000');
+
+        $color->red = 255;
+        $color->green = 255;
+        $color->blue = 255;
+        $color->alpha = 255;
+
+        $this->assertEquals('#ffffffff', $color->value);
+
+        $color->red = 0;
+        $color->green = 0;
+        $color->blue = 0;
+        $color->alpha = 0;
+
+        $this->assertEquals('#00000000', $color->value);
+
+        $color->red = 128;
+        $color->green = 128;
+        $color->blue = 128;
+        $color->alpha = 128;
+
+        $this->assertEquals('#80808080', $color->value);
+
+        $color->red = 25;
+        $color->green = 50;
+        $color->blue = 100;
+        $color->alpha = 150;
+
+        $this->assertEquals('#19326496', $color->value);
+    }
+
+    public function itShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
+    {
+        $color = new ColorHex('#ffffffff');
+
+        try {
+            $color->red = 256;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->green = 256;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->blue = 256;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->alpha = 256;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->red = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->green = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->blue = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->alpha = -1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        $this->assertEquals('#ffffffff', $color->value);
+    }
+
+    public function testItThrowsAnErrorIfTheValueIsChangedWhenImmutable(): void
+    {
+        $color = ColorHex::immutable('#00000000');
+
+        try {
+            $color->red = 1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->green = 1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->blue = 1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $color->alpha = 1;
+            throw new \Exception();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        $this->assertEquals('#00000000', $color->value);
+    }
+
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
         $color = new ColorHex(null, new TypeOptionsDTO(nullable: true));
