@@ -3,6 +3,7 @@
 namespace Martijnvdb\TypeVault\DTOs;
 
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
+use ReflectionClass;
 
 readonly class DTO
 {
@@ -11,16 +12,22 @@ readonly class DTO
      */
     public function copyWith(array $overrides): static
     {
-        $clone = clone $this;
+        $reflection = new ReflectionClass($this);
+        $props = [];
+
+        foreach ($reflection->getProperties() as $prop) {
+            $prop->setAccessible(true);
+            $props[$prop->getName()] = $prop->getValue($this);
+        }
 
         foreach ($overrides as $property => $value) {
             if (!property_exists($this, $property)) {
                 throw new TypeVaultValidationError("Property '{$property}' does not exist in " . static::class);
             }
 
-            $clone->$property = $value;
+            $props[$property] = $value;
         }
 
-        return $clone;
+        return new static(...$props);
     }
 }
