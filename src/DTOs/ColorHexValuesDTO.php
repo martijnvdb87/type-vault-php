@@ -2,7 +2,7 @@
 
 namespace Martijnvdb\TypeVault\DTOs;
 
-use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
+use function Martijnvdb\TypeVault\Utils\assertClamp;
 
 final readonly class ColorHexValuesDTO extends DTO
 {
@@ -12,13 +12,10 @@ final readonly class ColorHexValuesDTO extends DTO
         public int $blue = 0,
         public int $alpha = 255
     ) {
-        foreach ([$red, $green, $blue, $alpha] as $value) {
-            if ($value < 0 || $value > 255) {
-                throw new TypeVaultValidationError(
-                    "Value must be between 0 and 255"
-                );
-            }
-        }
+        assertClamp(name: "red", value: $red, min: 0, max: 255);
+        assertClamp(name: "green", value: $green, min: 0, max: 255);
+        assertClamp(name: "blue", value: $blue, min: 0, max: 255);
+        assertClamp(name: "alpha", value: $alpha, min: 0, max: 255);
     }
 
     public function __toString(): string

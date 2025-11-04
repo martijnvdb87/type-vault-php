@@ -26,6 +26,9 @@
   ],
   "license": "MIT",
   "autoload": {
+    "files": [
+      "src/Utils/NumberUtils.php"
+    ],
     "psr-4": {
       "Martijnvdb\\TypeVault\\": "src/"
     }
