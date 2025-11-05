@@ -86,7 +86,7 @@ class EmailTest extends TestCase
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $email = Email::nullable(null);
+        $email = Email::nullable();
         $this->assertNull($email->value);
     }
 

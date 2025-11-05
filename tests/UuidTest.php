@@ -83,7 +83,7 @@ class UuidTest extends TestCase
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $uuid = Uuid::nullable(null);
+        $uuid = Uuid::nullable();
         $this->assertNull($uuid->value);
     }
 

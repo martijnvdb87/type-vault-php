@@ -148,7 +148,7 @@ class ColorOklch extends Color
             lightness: floatval($matches[1]),
             chroma: floatval($matches[3]),
             hue: floatval($matches[5]),
-            alpha: floatval($matches[7]),
+            alpha: floatval($matches[6]),
         );
     }
 

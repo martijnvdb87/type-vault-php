@@ -306,7 +306,7 @@ class ColorHexTest extends TestCase
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $color = ColorHex::nullable(null);
+        $color = ColorHex::nullable();
         $this->assertNull($color->value);
     }
 

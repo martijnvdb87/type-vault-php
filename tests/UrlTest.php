@@ -88,7 +88,7 @@ class UrlTest extends TestCase
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $url = Url::nullable(null);
+        $url = Url::nullable();
         $this->assertNull($url->value);
     }
 

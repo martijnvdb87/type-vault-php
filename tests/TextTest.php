@@ -75,7 +75,7 @@ class TextTest extends TestCase
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $text = Text::nullable(null);
+        $text = Text::nullable();
         $this->assertNull($text->value);
     }
 

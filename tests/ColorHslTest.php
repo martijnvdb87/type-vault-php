@@ -262,7 +262,7 @@ class ColorHslTest extends TestCase
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $color = ColorHsl::nullable(null);
+        $color = ColorHsl::nullable();
         $this->assertNull($color->value);
     }
 
