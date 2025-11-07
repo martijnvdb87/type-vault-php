@@ -119,7 +119,7 @@ class ColorOklch extends Color
 
             $float = floatval($matches[6]);
 
-            if ($matches[7] === '%') {
+            if (isset($matches[7]) && $matches[7] === '%') {
                 return $float;
             }
 
@@ -136,12 +136,17 @@ class ColorOklch extends Color
         );
     }
 
-    private function matchValueFormat(string $value): ColorOklchValuesDTO | null
+    private function matchValueFormat(string | null $value): ColorOklchValuesDTO
     {
-        $matches = $this->getMatchFromString($value);
+        $matches = $this->getMatchFromString($value ?? '');
 
         if (!$matches) {
-            return null;
+            return new ColorOklchValuesDTO(
+                lightness: 0,
+                chroma: 0,
+                hue: 0,
+                alpha: 100,
+            );
         }
 
         return new ColorOklchValuesDTO(

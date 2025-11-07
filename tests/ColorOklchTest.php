@@ -80,19 +80,19 @@ class ColorOklchTest extends TestCase
         }
     }
 
-    // public function testItCanUpdateTheColorValues(): void
-    // {
-    //     foreach ($this->values as $value) {
-    //         $color = ColorOklch::nullable();
+    public function testItCanUpdateTheColorValues(): void
+    {
+        foreach ($this->values as $value) {
+            $color = ColorOklch::nullable();
 
-    //         $color->lightness = $value['lightness'];
-    //         $color->chroma = $value['chroma'];
-    //         $color->hue = $value['hue'];
-    //         $color->alpha = $value['alpha'];
+            $color->lightness = $value['lightness'];
+            $color->chroma = $value['chroma'];
+            $color->hue = $value['hue'];
+            $color->alpha = $value['alpha'];
 
-    //         $this->assertEquals($value['output'], $color->value);
-    //     }
-    // }
+            $this->assertEquals($value['output'], $color->value);
+        }
+    }
 
     public function testItCanModifyColorValues(): void
     {

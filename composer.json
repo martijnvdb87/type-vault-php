@@ -57,6 +57,6 @@
   "scripts": {
     "check": "composer lint && composer test",
     "lint": "phpstan analyse",
-    "test": "phpunit"
+    "test": "phpunit --display-warnings"
   }
 }
