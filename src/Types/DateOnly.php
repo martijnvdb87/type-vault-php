@@ -6,6 +6,11 @@ use Martijnvdb\TypeVault\DTOs\DateOnlyValuesDTO;
 
 class DateOnly extends Color
 {
+    public static function fromDateTime(\DateTime $dateTime): self
+    {
+        return new self($dateTime->format('Y-m-d'));
+    }
+
     public function toDateTime(): \DateTime | null
     {
         return isset($this->value) ? new \DateTime($this->value) : null;
