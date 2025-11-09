@@ -4,8 +4,6 @@ namespace Martijnvdb\TypeVault\Types;
 
 use Martijnvdb\TypeVault\DTOs\ColorRgbValuesDTO;
 
-use function Martijnvdb\TypeVault\Utils\assertClamp;
-
 class ColorRgb extends Color
 {
     public float $red {
