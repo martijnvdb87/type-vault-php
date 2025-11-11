@@ -24,14 +24,14 @@ final readonly class DateTimeValuesDTO extends DTO
         assertClamp(name: "second", value: $second, min: 0, max: 59);
         assertClamp(name: "microsecond", value: $microsecond, min: 0, max: 999);
 
-        $dateTimeString = $this->__toString();
+        $value = $this->__toString();
 
-        $dateTime = new \DateTime($dateTimeString);
+        $dateTime = new \DateTime($value);
 
         $microsecondString = substr($dateTime->format('u'), 0, 3);
         $dateTimeString = $dateTime->format('Y-m-d\TH:i:s') . '.' . $microsecondString . 'Z';
 
-        if (strcmp($dateTimeString, $dateTimeString) < 0) {
+        if (strcmp($value, $dateTimeString) < 0) {
             throw new TypeVaultValidationError("Invalid date time");
         }
     }
