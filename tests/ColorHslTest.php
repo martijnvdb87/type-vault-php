@@ -5,6 +5,7 @@ namespace Martijnvdb\TypeVault\Tests;
 use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 use Martijnvdb\TypeVault\Types\ColorHsl;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
 class ColorHslTest extends TestCase
@@ -211,26 +212,29 @@ class ColorHslTest extends TestCase
         }
     }
 
-    public function testItShouldThrowExceptionWhenValueIsInvalid(): void
+    /**
+     * @return array<mixed>
+     */
+    public static function invalidDataSet(): array
     {
-        $values = [
-            'example',
-            '#foo',
-            null,
-            1,
-            [],
-            true,
-            false,
+        return [
+            ['foo'],
+            ['#foo'],
+            ['foo@example'],
+            ['foo@example.'],
+            [1],
+            [[]],
+            [true],
+            [false],
+            [null],
         ];
+    }
 
-        foreach ($values as $value) {
-            try {
-                new ColorHsl($value);
-                $this->fail();
-            } catch (TypeVaultValidationError $expected) {
-                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
-            }
-        }
+    #[DataProviderExternal(self::class, 'invalidDataSet')]
+    public function testItShouldThrowExceptionWhenValueIsInvalid(mixed $value): void
+    {
+        $this->expectException(TypeVaultValidationError::class);
+        new ColorHsl($value);
     }
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void

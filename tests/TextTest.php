@@ -5,6 +5,7 @@ namespace Martijnvdb\TypeVault\Tests;
 use Martijnvdb\TypeVault\DTOs\TypeOptionsDTO;
 use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
 use Martijnvdb\TypeVault\Types\Text;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
 class TextTest extends TestCase
@@ -26,24 +27,25 @@ class TextTest extends TestCase
         }
     }
 
-    public function testItShouldThrowExceptionWhenValueIsInvalid(): void
+    /**
+     * @return array<mixed>
+     */
+    public static function invalidDataSet(): array
     {
-        $values = [
-            1,
-            [],
-            true,
-            false,
-            null,
+        return [
+            [1],
+            [[]],
+            [true],
+            [false],
+            [null],
         ];
+    }
 
-        foreach ($values as $value) {
-            try {
-                new Text($value);
-                $this->fail();
-            } catch (TypeVaultValidationError $expected) {
-                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
-            }
-        }
+    #[DataProviderExternal(self::class, 'invalidDataSet')]
+    public function testItShouldThrowExceptionWhenValueIsInvalid(mixed $value): void
+    {
+        $this->expectException(TypeVaultValidationError::class);
+        new Text($value);
     }
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
