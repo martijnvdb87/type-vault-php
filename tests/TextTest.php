@@ -36,10 +36,13 @@ class TextTest extends TestCase
             null,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new Text($value);
+            try {
+                new Text($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

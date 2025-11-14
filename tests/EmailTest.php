@@ -47,10 +47,13 @@ class EmailTest extends TestCase
             null,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new Email($value);
+            try {
+                new Email($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

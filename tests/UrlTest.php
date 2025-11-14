@@ -49,10 +49,13 @@ class UrlTest extends TestCase
             'bar',
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new Url($value);
+            try {
+                new Url($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

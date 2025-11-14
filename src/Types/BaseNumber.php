@@ -2,11 +2,24 @@
 
 namespace Martijnvdb\TypeVault\Types;
 
+use Martijnvdb\TypeVault\Errors\TypeVaultValidationError;
+
 /**
  * @property int|float|null $value
  */
 abstract class BaseNumber extends Type
 {
+    protected function modifier(mixed $value): mixed
+    {
+        $value = parent::modifier($value);
+
+        if (!is_numeric($value)) {
+            throw new TypeVaultValidationError();
+        }
+
+        return $value;
+    }
+
     protected function validate(mixed $value): bool
     {
         if (!is_numeric($value)) {

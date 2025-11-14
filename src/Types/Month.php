@@ -4,6 +4,7 @@ namespace Martijnvdb\TypeVault\Types;
 
 class Month extends BaseString
 {
+    /** @var array<string, Month> */
     private static $monthInstances = [];
 
     private static function getMonthInstance(string $monthName): Month

@@ -4,7 +4,7 @@ namespace Martijnvdb\TypeVault\Types;
 
 use Martijnvdb\TypeVault\DTOs\DurationValuesDTO;
 
-class Duration extends Color
+class Duration extends BaseString
 {
     protected function validate(mixed $value): bool
     {
@@ -17,6 +17,8 @@ class Duration extends Color
 
     protected function modifier(mixed $value): string
     {
+        $value = parent::modifier($value);
+
         $matches = $this->getComponents(strval($value));
 
         if ($matches) {

@@ -287,10 +287,13 @@ class ColorRgbTest extends TestCase
             false,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new ColorRgb($value);
+            try {
+                new ColorRgb($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

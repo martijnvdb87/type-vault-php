@@ -223,10 +223,13 @@ class ColorHslTest extends TestCase
             false,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new ColorHsl($value);
+            try {
+                new ColorHsl($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

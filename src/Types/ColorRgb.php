@@ -65,6 +65,8 @@ class ColorRgb extends Color
 
     protected function modifier(mixed $value): string
     {
+        $value = parent::modifier($value);
+
         $matches = $this->getMatchFromString($value);
 
         if ($matches) {

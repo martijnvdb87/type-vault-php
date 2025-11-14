@@ -4,7 +4,7 @@ namespace Martijnvdb\TypeVault\Types;
 
 use Martijnvdb\TypeVault\DTOs\DateTimeValuesDTO;
 
-class DateTime extends Color
+class DateTime extends BaseString
 {
     public static function fromDateTime(\DateTime $dateTime): self
     {
@@ -30,6 +30,8 @@ class DateTime extends Color
 
     protected function modifier(mixed $value): string
     {
+        $value = parent::modifier($value);
+
         $matches = $this->getComponents(strval($value));
 
         if ($matches) {

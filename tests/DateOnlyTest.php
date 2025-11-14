@@ -53,10 +53,13 @@ class DateOnlyTest extends TestCase
             false,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new DateOnly($value);
+            try {
+                new DateOnly($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

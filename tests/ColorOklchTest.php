@@ -200,10 +200,13 @@ class ColorOklchTest extends TestCase
             false,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new ColorOklch($value);
+            try {
+                new ColorOklch($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

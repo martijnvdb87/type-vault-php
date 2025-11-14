@@ -106,10 +106,13 @@ class ColorHexTest extends TestCase
             null,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new ColorHex($value);
+            try {
+                new ColorHex($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

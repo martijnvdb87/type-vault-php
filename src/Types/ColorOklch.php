@@ -67,6 +67,8 @@ class ColorOklch extends Color
 
     protected function modifier(mixed $value): string
     {
+        $value = parent::modifier($value);
+
         $matchAbsoluteFormat = $this->matchAbsoluteFormat($value);
 
         if ($matchAbsoluteFormat !== null) {

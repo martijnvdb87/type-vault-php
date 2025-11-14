@@ -47,17 +47,19 @@ class FloatingPointTest extends TestCase
             'foo',
             'foo@example',
             'foo@example.',
-            '1',
             [],
             true,
             false,
             null,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new FloatingPoint($value);
+            try {
+                new FloatingPoint($value);
+                $this->fail();
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 

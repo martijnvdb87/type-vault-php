@@ -68,6 +68,8 @@ class ColorHex extends Color
 
     protected function modifier(mixed $value): string
     {
+        $value = parent::modifier($value);
+
         preg_match('/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/', strval($value), $shortNotation);
 
         if ($shortNotation) {

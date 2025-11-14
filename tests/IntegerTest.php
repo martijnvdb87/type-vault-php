@@ -35,17 +35,19 @@ class IntegerTest extends TestCase
             'foo',
             'foo@example',
             'foo@example.',
-            '1',
             [],
             true,
             false,
             null,
         ];
 
-        $this->expectException(TypeVaultValidationError::class);
-
         foreach ($values as $value) {
-            new Integer($value);
+            try {
+                new Integer($value);
+                $this->fail($value);
+            } catch (TypeVaultValidationError $expected) {
+                $this->assertInstanceOf(TypeVaultValidationError::class, $expected);
+            }
         }
     }
 
