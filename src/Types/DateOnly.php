@@ -6,6 +6,42 @@ use Martijnvdb\TypeVault\DTOs\DateOnlyValuesDTO;
 
 class DateOnly extends BaseString
 {
+    public int $year {
+        get => $this->valueToDTO($this->value)->year;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['year' => $value])->__toString();
+        }
+    }
+
+    public int $month {
+        get => $this->valueToDTO($this->value)->month;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['month' => $value])->__toString();
+        }
+    }
+
+    public int $day {
+        get => $this->valueToDTO($this->value)->day;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['day' => $value])->__toString();
+        }
+    }
+
     public static function fromDateTime(\DateTime $dateTime): self
     {
         return new self($dateTime->format('Y-m-d'));
@@ -29,7 +65,7 @@ class DateOnly extends BaseString
     {
         $value = parent::modifier($value);
 
-        $matches = $this->getComponents(strval($value));
+        $matches = $this->getComponents($value);
 
         if ($matches) {
             return (new DateOnlyValuesDTO(
@@ -81,5 +117,24 @@ class DateOnly extends BaseString
         }
 
         return $matches;
+    }
+
+    private function valueToDTO(string|null $value): DateOnlyValuesDTO
+    {
+        if ($value === null) {
+            return new DateOnlyValuesDTO();
+        }
+
+        $matches = $this->getComponents($value);
+
+        if (!$matches) {
+            return new DateOnlyValuesDTO();
+        }
+
+        return (new DateOnlyValuesDTO(
+            year: $matches["year"],
+            month: $matches["month"],
+            day: $matches["day"]
+        ));
     }
 }

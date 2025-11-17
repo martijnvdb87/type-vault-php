@@ -7,48 +7,48 @@ use Martijnvdb\TypeVault\DTOs\ColorHexValuesDTO;
 class ColorHex extends Color
 {
     public int $red {
-        get => $this->hexToNumberValues($this->value)->red;
+        get => $this->valueToDTO($this->value)->red;
 
         set(int $value) {
             $this->assertMutable();
 
-            $values = $this->hexToNumberValues($this->value);
+            $values = $this->valueToDTO($this->value);
 
             $this->value = $values->copyWith(['red' => $value])->__toString();
         }
     }
 
     public int $green {
-        get => $this->hexToNumberValues($this->value)->green;
+        get => $this->valueToDTO($this->value)->green;
 
         set(int $value) {
             $this->assertMutable();
 
-            $values = $this->hexToNumberValues($this->value);
+            $values = $this->valueToDTO($this->value);
 
             $this->value = $values->copyWith(['green' => $value])->__toString();
         }
     }
 
     public int $blue {
-        get => $this->hexToNumberValues($this->value)->blue;
+        get => $this->valueToDTO($this->value)->blue;
 
         set(int $value) {
             $this->assertMutable();
 
-            $values = $this->hexToNumberValues($this->value);
+            $values = $this->valueToDTO($this->value);
 
             $this->value = $values->copyWith(['blue' => $value])->__toString();
         }
     }
 
     public int $alpha {
-        get => $this->hexToNumberValues($this->value)->alpha;
+        get => $this->valueToDTO($this->value)->alpha;
 
         set(int $value) {
             $this->assertMutable();
 
-            $values = $this->hexToNumberValues($this->value);
+            $values = $this->valueToDTO($this->value);
 
             $this->value = $values->copyWith(['alpha' => $value])->__toString();
         }
@@ -102,10 +102,10 @@ class ColorHex extends Color
         return intval($hex, 16) % 256;
     }
 
-    private function hexToNumberValues(string | null $value): ColorHexValuesDTO
+    private function valueToDTO(string | null $value): ColorHexValuesDTO
     {
         if ($value === null) {
-            return new ColorHexValuesDTO(red: 0, green: 0, blue: 0, alpha: 0);
+            return new ColorHexValuesDTO();
         }
 
         return new ColorHexValuesDTO(

@@ -10,27 +10,42 @@ use PHPUnit\Framework\TestCase;
 
 class DateOnlyTest extends TestCase
 {
-    /** @var array<int, array<string, string>> */
+    /** @var array<int, array<string, int|string>> */
     private array $values = [
         [
             'input' => '0-1-1',
             'output' => '0000-01-01',
+            'year' => 0,
+            'month' => 1,
+            'day' => 1,
         ],
         [
             'input' => '1-1-1',
             'output' => '0001-01-01',
+            'year' => 1,
+            'month' => 1,
+            'day' => 1,
         ],
         [
             'input' => '1000-01-01',
             'output' => '1000-01-01',
+            'year' => 1000,
+            'month' => 1,
+            'day' => 1,
         ],
         [
             'input' => '9999-12-31',
             'output' => '9999-12-31',
+            'year' => 9999,
+            'month' => 12,
+            'day' => 31,
         ],
         [
             'input' => '2000-01-01',
             'output' => '2000-01-01',
+            'year' => 2000,
+            'month' => 1,
+            'day' => 1,
         ],
     ];
 
@@ -38,6 +53,33 @@ class DateOnlyTest extends TestCase
     {
         foreach ($this->values as $value) {
             $dateOnly = new DateOnly($value['input']);
+            $this->assertEquals($value['output'], $dateOnly->value);
+        }
+    }
+
+    public function testItShouldReturnTheCorrectPropertyValues(): void
+    {
+        foreach ($this->values as $value) {
+            $color = new DateOnly($value['input']);
+            $this->assertEquals($value['year'], $color->year);
+            $this->assertEquals($value['month'], $color->month);
+            $this->assertEquals($value['day'], $color->day);
+        }
+    }
+
+    public function testItCanUpdateThePropertyValues(): void
+    {
+        foreach ($this->values as $value) {
+            $dateOnly = DateOnly::nullable();
+
+            $dateOnly->year = $value['year'];
+            $dateOnly->month = $value['month'];
+            $dateOnly->day = $value['day'];
+
+            $this->assertEquals($value['year'], $dateOnly->year);
+            $this->assertEquals($value['month'], $dateOnly->month);
+            $this->assertEquals($value['day'], $dateOnly->day);
+
             $this->assertEquals($value['output'], $dateOnly->value);
         }
     }
