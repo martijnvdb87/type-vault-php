@@ -221,56 +221,56 @@ class ColorRgbTest extends TestCase
 
         try {
             $color->red = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->green = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->blue = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->alpha = 101;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->red = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->green = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->blue = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->alpha = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }

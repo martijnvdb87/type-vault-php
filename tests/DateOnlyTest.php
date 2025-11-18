@@ -84,6 +84,111 @@ class DateOnlyTest extends TestCase
         }
     }
 
+    public function testItCanModifyColorValues(): void
+    {
+        $dateOnly = new DateOnly('0000-01-01');
+
+        $dateOnly->year = 9999;
+        $dateOnly->month = 12;
+        $dateOnly->day = 31;
+
+        $this->assertEquals('9999-12-31', $dateOnly->value);
+
+        $dateOnly->year = 0;
+        $dateOnly->month = 1;
+        $dateOnly->day = 1;
+
+        $this->assertEquals('0000-01-01', $dateOnly->value);
+
+        $dateOnly->year = 2000;
+        $dateOnly->month = 6;
+        $dateOnly->day = 15;
+
+        $this->assertEquals('2000-06-15', $dateOnly->value);
+
+        $dateOnly->year = 2024;
+        $dateOnly->month = 2;
+        $dateOnly->day = 29;
+
+        $this->assertEquals('2024-02-29', $dateOnly->value);
+    }
+
+    public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
+    {
+        $dateOnly = new DateOnly('0000-01-01');
+
+        try {
+            $dateOnly->year = 10_000;
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->month = 13;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->day = 32;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->year = -1;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->month = 0;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->day = 0;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        $this->assertEquals('0000-01-01', $dateOnly->value);
+    }
+
+    public function testItThrowsAnErrorIfTheValueIsChangedWhenImmutable(): void
+    {
+        $dateOnly = DateOnly::immutable('0000-01-01');
+
+        try {
+            $dateOnly->year = 1;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->month = 1;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        try {
+            $dateOnly->day = 1;
+            $this->fail();
+        } catch (TypeVaultValidationError $error) {
+            $this->assertInstanceOf(TypeVaultValidationError::class, $error);
+        }
+
+        $this->assertEquals('0000-01-01', $dateOnly->value);
+    }
+
     /**
      * @return array<mixed>
      */

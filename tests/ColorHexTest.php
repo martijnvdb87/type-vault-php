@@ -148,7 +148,7 @@ class ColorHexTest extends TestCase
         }
     }
 
-    public function itCanModifyColorValues(): void
+    public function testItCanModifyColorValues(): void
     {
         $color = new ColorHex('#00000000');
 
@@ -181,62 +181,62 @@ class ColorHexTest extends TestCase
         $this->assertEquals('#19326496', $color->value);
     }
 
-    public function itShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
+    public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
     {
         $color = new ColorHex('#ffffffff');
 
         try {
             $color->red = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->green = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->blue = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->alpha = 256;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->red = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->green = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->blue = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->alpha = -1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
@@ -250,28 +250,28 @@ class ColorHexTest extends TestCase
 
         try {
             $color->red = 1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->green = 1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->blue = 1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
             $color->alpha = 1;
-            throw new \Exception();
+            $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
