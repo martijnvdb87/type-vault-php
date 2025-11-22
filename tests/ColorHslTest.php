@@ -81,131 +81,131 @@ class ColorHslTest extends TestCase
     public function testItSetsValueCorrectly(): void
     {
         foreach ($this->values as $value) {
-            $color = new ColorHsl($value['input']);
-            $this->assertEquals($value['output'], $color->value);
+            $instance = new ColorHsl($value['input']);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
     public function testItShouldReturnTheCorrectColorValues(): void
     {
         foreach ($this->values as $value) {
-            $color = new ColorHsl($value['input']);
-            $this->assertEquals($value['hue'], $color->hue);
-            $this->assertEquals($value['saturation'], $color->saturation);
-            $this->assertEquals($value['lightness'], $color->lightness);
-            $this->assertEquals($value['alpha'], $color->alpha);
+            $instance = new ColorHsl($value['input']);
+            $this->assertEquals($value['hue'], $instance->hue);
+            $this->assertEquals($value['saturation'], $instance->saturation);
+            $this->assertEquals($value['lightness'], $instance->lightness);
+            $this->assertEquals($value['alpha'], $instance->alpha);
         }
     }
 
     public function testItCanUpdateTheColorValues(): void
     {
         foreach ($this->values as $value) {
-            $color = ColorHsl::nullable();
+            $instance = ColorHsl::nullable();
 
-            $color->hue = $value['hue'];
-            $color->saturation = $value['saturation'];
-            $color->lightness = $value['lightness'];
-            $color->alpha = $value['alpha'];
+            $instance->hue = $value['hue'];
+            $instance->saturation = $value['saturation'];
+            $instance->lightness = $value['lightness'];
+            $instance->alpha = $value['alpha'];
 
-            $this->assertEquals($value['output'], $color->value);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
-    public function testItCanModifyColorValues(): void
+    public function testItCanModifyPropertyValues(): void
     {
-        $color = new ColorHsl('hsl(0, 0, 0)');
+        $instance = new ColorHsl('hsl(0, 0, 0)');
 
-        $color->hue = 360;
-        $color->saturation = 100;
-        $color->lightness = 100;
-        $color->alpha = 100;
+        $instance->hue = 360;
+        $instance->saturation = 100;
+        $instance->lightness = 100;
+        $instance->alpha = 100;
 
-        $this->assertEquals('hsl(360deg 100% 100% / 100%)', $color->value);
+        $this->assertEquals('hsl(360deg 100% 100% / 100%)', $instance->value);
 
-        $color->hue = 0;
-        $color->saturation = 0;
-        $color->lightness = 0;
-        $color->alpha = 0;
+        $instance->hue = 0;
+        $instance->saturation = 0;
+        $instance->lightness = 0;
+        $instance->alpha = 0;
 
-        $this->assertEquals('hsl(0deg 0% 0% / 0%)', $color->value);
+        $this->assertEquals('hsl(0deg 0% 0% / 0%)', $instance->value);
 
-        $color->hue = 180;
-        $color->saturation = 50;
-        $color->lightness = 50;
-        $color->alpha = 50;
+        $instance->hue = 180;
+        $instance->saturation = 50;
+        $instance->lightness = 50;
+        $instance->alpha = 50;
 
-        $this->assertEquals('hsl(180deg 50% 50% / 50%)', $color->value);
+        $this->assertEquals('hsl(180deg 50% 50% / 50%)', $instance->value);
 
-        $color->hue = 25;
-        $color->saturation = 50;
-        $color->lightness = 100;
-        $color->alpha = 10;
+        $instance->hue = 25;
+        $instance->saturation = 50;
+        $instance->lightness = 100;
+        $instance->alpha = 10;
 
-        $this->assertEquals('hsl(25deg 50% 100% / 10%)', $color->value);
+        $this->assertEquals('hsl(25deg 50% 100% / 10%)', $instance->value);
 
-        $color->hue = 12.5;
-        $color->saturation = 45.6;
-        $color->lightness = 7.89;
-        $color->alpha = 1.23;
+        $instance->hue = 12.5;
+        $instance->saturation = 45.6;
+        $instance->lightness = 7.89;
+        $instance->alpha = 1.23;
 
-        $this->assertEquals('hsl(12.5deg 45.6% 7.89% / 1.23%)', $color->value);
+        $this->assertEquals('hsl(12.5deg 45.6% 7.89% / 1.23%)', $instance->value);
     }
 
     public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
     {
-        $color = new ColorHsl('hsl(0deg, 0%, 0%, 0)');
+        $instance = new ColorHsl('hsl(0deg, 0%, 0%, 0)');
 
         try {
-            $color->hue = 361;
+            $instance->hue = 361;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->saturation = 101;
+            $instance->saturation = 101;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->lightness = 101;
+            $instance->lightness = 101;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->alpha = 101;
+            $instance->alpha = 101;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->hue = -1;
+            $instance->hue = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->saturation = -1;
+            $instance->saturation = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->lightness = -1;
+            $instance->lightness = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->alpha = -1;
+            $instance->alpha = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
@@ -239,8 +239,8 @@ class ColorHslTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $color = new ColorHsl(null, new TypeOptionsDTO(nullable: true));
-        $this->assertNull($color->value);
+        $instance = new ColorHsl(null, new TypeOptionsDTO(nullable: true));
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
@@ -251,26 +251,26 @@ class ColorHslTest extends TestCase
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $color = new ColorHsl('hsl(0 0 0 / 0)', new TypeOptionsDTO(immutable: false));
+        $instance = new ColorHsl('hsl(0 0 0 / 0)', new TypeOptionsDTO(immutable: false));
 
-        $newColorHsl = 'hsl(0deg 0% 0% / 100%)';
+        $newInstance = 'hsl(0deg 0% 0% / 100%)';
 
-        $color->value = $newColorHsl;
-        $this->assertEquals($newColorHsl, $color->value);
+        $instance->value = $newInstance;
+        $this->assertEquals($newInstance, $instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $color = new ColorHsl('hsl(0 0 0 / 0)', new TypeOptionsDTO(immutable: true));
+        $instance = new ColorHsl('hsl(0 0 0 / 0)', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
-        $color->value = 'hsl(0 0 0 / 100)';
+        $instance->value = 'hsl(0 0 0 / 100)';
     }
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $color = ColorHsl::nullable();
-        $this->assertNull($color->value);
+        $instance = ColorHsl::nullable();
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void

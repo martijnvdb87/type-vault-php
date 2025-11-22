@@ -145,131 +145,131 @@ class ColorRgbTest extends TestCase
     public function testItSetsValueCorrectly(): void
     {
         foreach ($this->values as $value) {
-            $color = new ColorRgb($value['input']);
-            $this->assertEquals($value['output'], $color->value);
+            $instance = new ColorRgb($value['input']);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
     public function testItShouldReturnTheCorrectColorValues(): void
     {
         foreach ($this->values as $value) {
-            $color = new ColorRgb($value['input']);
-            $this->assertEquals($value['red'], $color->red);
-            $this->assertEquals($value['green'], $color->green);
-            $this->assertEquals($value['blue'], $color->blue);
-            $this->assertEquals($value['alpha'], $color->alpha);
+            $instance = new ColorRgb($value['input']);
+            $this->assertEquals($value['red'], $instance->red);
+            $this->assertEquals($value['green'], $instance->green);
+            $this->assertEquals($value['blue'], $instance->blue);
+            $this->assertEquals($value['alpha'], $instance->alpha);
         }
     }
 
     public function testItCanUpdateTheColorValues(): void
     {
         foreach ($this->values as $value) {
-            $color = ColorRgb::nullable();
+            $instance = ColorRgb::nullable();
 
-            $color->red = $value['red'];
-            $color->green = $value['green'];
-            $color->blue = $value['blue'];
-            $color->alpha = $value['alpha'];
+            $instance->red = $value['red'];
+            $instance->green = $value['green'];
+            $instance->blue = $value['blue'];
+            $instance->alpha = $value['alpha'];
 
-            $this->assertEquals($value['output'], $color->value);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
-    public function testItCanModifyColorValues(): void
+    public function testItCanModifyPropertyValues(): void
     {
-        $color = new ColorRgb('rgb(0, 0, 0)');
+        $instance = new ColorRgb('rgb(0, 0, 0)');
 
-        $color->red = 255;
-        $color->green = 255;
-        $color->blue = 255;
-        $color->alpha = 100;
+        $instance->red = 255;
+        $instance->green = 255;
+        $instance->blue = 255;
+        $instance->alpha = 100;
 
-        $this->assertEquals('rgb(255 255 255 / 100%)', $color->value);
+        $this->assertEquals('rgb(255 255 255 / 100%)', $instance->value);
 
-        $color->red = 0;
-        $color->green = 0;
-        $color->blue = 0;
-        $color->alpha = 0;
+        $instance->red = 0;
+        $instance->green = 0;
+        $instance->blue = 0;
+        $instance->alpha = 0;
 
-        $this->assertEquals('rgb(0 0 0 / 0%)', $color->value);
+        $this->assertEquals('rgb(0 0 0 / 0%)', $instance->value);
 
-        $color->red = 128;
-        $color->green = 128;
-        $color->blue = 128;
-        $color->alpha = 50;
+        $instance->red = 128;
+        $instance->green = 128;
+        $instance->blue = 128;
+        $instance->alpha = 50;
 
-        $this->assertEquals('rgb(128 128 128 / 50%)', $color->value);
+        $this->assertEquals('rgb(128 128 128 / 50%)', $instance->value);
 
-        $color->red = 25;
-        $color->green = 50;
-        $color->blue = 100;
-        $color->alpha = 10;
+        $instance->red = 25;
+        $instance->green = 50;
+        $instance->blue = 100;
+        $instance->alpha = 10;
 
-        $this->assertEquals('rgb(25 50 100 / 10%)', $color->value);
+        $this->assertEquals('rgb(25 50 100 / 10%)', $instance->value);
 
-        $color->red = 12.3;
-        $color->green = 45.6;
-        $color->blue = 7.89;
-        $color->alpha = 1.23;
+        $instance->red = 12.3;
+        $instance->green = 45.6;
+        $instance->blue = 7.89;
+        $instance->alpha = 1.23;
 
-        $this->assertEquals('rgb(12.3 45.6 7.89 / 1.23%)', $color->value);
+        $this->assertEquals('rgb(12.3 45.6 7.89 / 1.23%)', $instance->value);
     }
 
     public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
     {
-        $color = new ColorRgb('rgb(0 0 0 / 0)');
+        $instance = new ColorRgb('rgb(0 0 0 / 0)');
 
         try {
-            $color->red = 256;
+            $instance->red = 256;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->green = 256;
+            $instance->green = 256;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->blue = 256;
+            $instance->blue = 256;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->alpha = 101;
+            $instance->alpha = 101;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->red = -1;
+            $instance->red = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->green = -1;
+            $instance->green = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->blue = -1;
+            $instance->blue = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->alpha = -1;
+            $instance->alpha = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
@@ -303,8 +303,8 @@ class ColorRgbTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $color = new ColorRgb(null, new TypeOptionsDTO(nullable: true));
-        $this->assertNull($color->value);
+        $instance = new ColorRgb(null, new TypeOptionsDTO(nullable: true));
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
@@ -315,26 +315,26 @@ class ColorRgbTest extends TestCase
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $color = new ColorRgb('rgb(0 0 0 / 0%)', new TypeOptionsDTO(immutable: false));
+        $instance = new ColorRgb('rgb(0 0 0 / 0%)', new TypeOptionsDTO(immutable: false));
 
-        $newColorRgb = 'rgb(255 255 255 / 100%)';
+        $newInstance = 'rgb(255 255 255 / 100%)';
 
-        $color->value = $newColorRgb;
-        $this->assertEquals($newColorRgb, $color->value);
+        $instance->value = $newInstance;
+        $this->assertEquals($newInstance, $instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $color = new ColorRgb('rgb(0 0 0 / 0%)', new TypeOptionsDTO(immutable: true));
+        $instance = new ColorRgb('rgb(0 0 0 / 0%)', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
-        $color->value = 'rgb(255 255 255 / 100%)';
+        $instance->value = 'rgb(255 255 255 / 100%)';
     }
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $color = ColorRgb::nullable();
-        $this->assertNull($color->value);
+        $instance = ColorRgb::nullable();
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void

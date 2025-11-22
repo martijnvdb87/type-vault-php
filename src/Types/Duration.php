@@ -6,6 +6,90 @@ use Martijnvdb\TypeVault\DTOs\DurationValuesDTO;
 
 class Duration extends BaseString
 {
+    public float $year {
+        get => $this->valueToDTO($this->value)->year;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['year' => $value])->__toString();
+        }
+    }
+
+    public float $month {
+        get => $this->valueToDTO($this->value)->month;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['month' => $value])->__toString();
+        }
+    }
+
+    public float $week {
+        get => $this->valueToDTO($this->value)->week;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['week' => $value])->__toString();
+        }
+    }
+
+    public float $day {
+        get => $this->valueToDTO($this->value)->day;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['day' => $value])->__toString();
+        }
+    }
+
+    public float $hour {
+        get => $this->valueToDTO($this->value)->hour;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['hour' => $value])->__toString();
+        }
+    }
+
+    public float $minute {
+        get => $this->valueToDTO($this->value)->minute;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['minute' => $value])->__toString();
+        }
+    }
+
+    public float $second {
+        get => $this->valueToDTO($this->value)->second;
+
+        set(float $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['second' => $value])->__toString();
+        }
+    }
+
     protected function validate(mixed $value): bool
     {
         if (!parent::validate($value)) {
@@ -75,5 +159,28 @@ class Duration extends BaseString
         }
 
         return $matches;
+    }
+
+    private function valueToDTO(string|null $value): DurationValuesDTO
+    {
+        if ($value === null) {
+            return new DurationValuesDTO();
+        }
+
+        $matches = $this->getComponents($value);
+
+        if (!$matches) {
+            return new DurationValuesDTO();
+        }
+
+        return (new DurationValuesDTO(
+            year: $matches["year"],
+            month: $matches["month"],
+            week: $matches["week"],
+            day: $matches["day"],
+            hour: $matches["hour"],
+            minute: $matches["minute"],
+            second: $matches["second"]
+        ));
     }
 }

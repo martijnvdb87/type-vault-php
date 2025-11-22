@@ -52,141 +52,141 @@ class DateOnlyTest extends TestCase
     public function testItSetsValueCorrectly(): void
     {
         foreach ($this->values as $value) {
-            $dateOnly = new DateOnly($value['input']);
-            $this->assertEquals($value['output'], $dateOnly->value);
+            $instance = new DateOnly($value['input']);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
     public function testItShouldReturnTheCorrectPropertyValues(): void
     {
         foreach ($this->values as $value) {
-            $color = new DateOnly($value['input']);
-            $this->assertEquals($value['year'], $color->year);
-            $this->assertEquals($value['month'], $color->month);
-            $this->assertEquals($value['day'], $color->day);
+            $instance = new DateOnly($value['input']);
+            $this->assertEquals($value['year'], $instance->year);
+            $this->assertEquals($value['month'], $instance->month);
+            $this->assertEquals($value['day'], $instance->day);
         }
     }
 
     public function testItCanUpdateThePropertyValues(): void
     {
         foreach ($this->values as $value) {
-            $dateOnly = DateOnly::nullable();
+            $instance = DateOnly::nullable();
 
-            $dateOnly->year = $value['year'];
-            $dateOnly->month = $value['month'];
-            $dateOnly->day = $value['day'];
+            $instance->year = $value['year'];
+            $instance->month = $value['month'];
+            $instance->day = $value['day'];
 
-            $this->assertEquals($value['year'], $dateOnly->year);
-            $this->assertEquals($value['month'], $dateOnly->month);
-            $this->assertEquals($value['day'], $dateOnly->day);
+            $this->assertEquals($value['year'], $instance->year);
+            $this->assertEquals($value['month'], $instance->month);
+            $this->assertEquals($value['day'], $instance->day);
 
-            $this->assertEquals($value['output'], $dateOnly->value);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
-    public function testItCanModifyColorValues(): void
+    public function testItCanModifyPropertyValues(): void
     {
-        $dateOnly = new DateOnly('0000-01-01');
+        $instance = new DateOnly('0000-01-01');
 
-        $dateOnly->year = 9999;
-        $dateOnly->month = 12;
-        $dateOnly->day = 31;
+        $instance->year = 9999;
+        $instance->month = 12;
+        $instance->day = 31;
 
-        $this->assertEquals('9999-12-31', $dateOnly->value);
+        $this->assertEquals('9999-12-31', $instance->value);
 
-        $dateOnly->year = 0;
-        $dateOnly->month = 1;
-        $dateOnly->day = 1;
+        $instance->year = 0;
+        $instance->month = 1;
+        $instance->day = 1;
 
-        $this->assertEquals('0000-01-01', $dateOnly->value);
+        $this->assertEquals('0000-01-01', $instance->value);
 
-        $dateOnly->year = 2000;
-        $dateOnly->month = 6;
-        $dateOnly->day = 15;
+        $instance->year = 2000;
+        $instance->month = 6;
+        $instance->day = 15;
 
-        $this->assertEquals('2000-06-15', $dateOnly->value);
+        $this->assertEquals('2000-06-15', $instance->value);
 
-        $dateOnly->year = 2024;
-        $dateOnly->month = 2;
-        $dateOnly->day = 29;
+        $instance->year = 2024;
+        $instance->month = 2;
+        $instance->day = 29;
 
-        $this->assertEquals('2024-02-29', $dateOnly->value);
+        $this->assertEquals('2024-02-29', $instance->value);
     }
 
     public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
     {
-        $dateOnly = new DateOnly('0000-01-01');
+        $instance = new DateOnly('0000-01-01');
 
         try {
-            $dateOnly->year = 10_000;
+            $instance->year = 10_000;
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->month = 13;
+            $instance->month = 13;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->day = 32;
+            $instance->day = 32;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->year = -1;
+            $instance->year = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->month = 0;
+            $instance->month = 0;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->day = 0;
+            $instance->day = 0;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
-        $this->assertEquals('0000-01-01', $dateOnly->value);
+        $this->assertEquals('0000-01-01', $instance->value);
     }
 
     public function testItThrowsAnErrorIfTheValueIsChangedWhenImmutable(): void
     {
-        $dateOnly = DateOnly::immutable('0000-01-01');
+        $instance = DateOnly::immutable('0000-01-01');
 
         try {
-            $dateOnly->year = 1;
+            $instance->year = 1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->month = 1;
+            $instance->month = 1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $dateOnly->day = 1;
+            $instance->day = 1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
-        $this->assertEquals('0000-01-01', $dateOnly->value);
+        $this->assertEquals('0000-01-01', $instance->value);
     }
 
     /**
@@ -216,23 +216,23 @@ class DateOnlyTest extends TestCase
 
     public function testItShouldReturnDateTime(): void
     {
-        $dateOnlyString = '2000-01-01';
-        $dateOnly = new DateOnly($dateOnlyString);
+        $instanceString = '2000-01-01';
+        $instance = new DateOnly($instanceString);
 
-        $this->assertInstanceOf(\DateTime::class, $dateOnly->toDateTime());
-        $this->assertEquals($dateOnlyString, $dateOnly->toDateTime()->format('Y-m-d'));
+        $this->assertInstanceOf(\DateTime::class, $instance->toDateTime());
+        $this->assertEquals($instanceString, $instance->toDateTime()->format('Y-m-d'));
     }
 
     public function testItShouldReturnDateOnlyFromDateTime(): void
     {
-        $dateOnly = DateOnly::fromDateTime(new \DateTime('2000-01-01'));
-        $this->assertEquals('2000-01-01', $dateOnly->value);
+        $instance = DateOnly::fromDateTime(new \DateTime('2000-01-01'));
+        $this->assertEquals('2000-01-01', $instance->value);
     }
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $dateOnly = new DateOnly(null, new TypeOptionsDTO(nullable: true));
-        $this->assertNull($dateOnly->value);
+        $instance = new DateOnly(null, new TypeOptionsDTO(nullable: true));
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
@@ -243,26 +243,26 @@ class DateOnlyTest extends TestCase
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $dateOnly = new DateOnly('2000-01-01', new TypeOptionsDTO(immutable: false));
+        $instance = new DateOnly('2000-01-01', new TypeOptionsDTO(immutable: false));
 
-        $newDateOnly = '2001-02-02';
+        $newInstance = '2001-02-02';
 
-        $dateOnly->value = $newDateOnly;
-        $this->assertEquals($newDateOnly, $dateOnly->value);
+        $instance->value = $newInstance;
+        $this->assertEquals($newInstance, $instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $dateOnly = new DateOnly('2000-01-01', new TypeOptionsDTO(immutable: true));
+        $instance = new DateOnly('2000-01-01', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
-        $dateOnly->value = '2001-02-02';
+        $instance->value = '2001-02-02';
     }
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $dateOnly = DateOnly::nullable();
-        $this->assertNull($dateOnly->value);
+        $instance = DateOnly::nullable();
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void

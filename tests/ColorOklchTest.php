@@ -65,124 +65,124 @@ class ColorOklchTest extends TestCase
     public function testItSetsValueCorrectly(): void
     {
         foreach ($this->values as $value) {
-            $color = new ColorOklch($value['input']);
-            $this->assertEquals($value['output'], $color->value);
+            $instance = new ColorOklch($value['input']);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
     public function testItShouldReturnTheCorrectColorValues(): void
     {
         foreach ($this->values as $value) {
-            $color = new ColorOklch($value['input']);
-            $this->assertEquals($value['lightness'], $color->lightness);
-            $this->assertEquals($value['chroma'], $color->chroma);
-            $this->assertEquals($value['hue'], $color->hue);
-            $this->assertEquals($value['alpha'], $color->alpha);
+            $instance = new ColorOklch($value['input']);
+            $this->assertEquals($value['lightness'], $instance->lightness);
+            $this->assertEquals($value['chroma'], $instance->chroma);
+            $this->assertEquals($value['hue'], $instance->hue);
+            $this->assertEquals($value['alpha'], $instance->alpha);
         }
     }
 
     public function testItCanUpdateTheColorValues(): void
     {
         foreach ($this->values as $value) {
-            $color = ColorOklch::nullable();
+            $instance = ColorOklch::nullable();
 
-            $color->lightness = $value['lightness'];
-            $color->chroma = $value['chroma'];
-            $color->hue = $value['hue'];
-            $color->alpha = $value['alpha'];
+            $instance->lightness = $value['lightness'];
+            $instance->chroma = $value['chroma'];
+            $instance->hue = $value['hue'];
+            $instance->alpha = $value['alpha'];
 
-            $this->assertEquals($value['output'], $color->value);
+            $this->assertEquals($value['output'], $instance->value);
         }
     }
 
-    public function testItCanModifyColorValues(): void
+    public function testItCanModifyPropertyValues(): void
     {
-        $color = new ColorOklch('oklch(0 0 0)');
+        $instance = new ColorOklch('oklch(0 0 0)');
 
-        $color->lightness = 100;
-        $color->chroma = 0.4;
-        $color->hue = 100;
-        $color->alpha = 100;
+        $instance->lightness = 100;
+        $instance->chroma = 0.4;
+        $instance->hue = 100;
+        $instance->alpha = 100;
 
-        $this->assertEquals('oklch(100% 0.4 100deg / 100%)', $color->value);
+        $this->assertEquals('oklch(100% 0.4 100deg / 100%)', $instance->value);
 
-        $color->lightness = 0;
-        $color->chroma = 0;
-        $color->hue = 0;
-        $color->alpha = 0;
+        $instance->lightness = 0;
+        $instance->chroma = 0;
+        $instance->hue = 0;
+        $instance->alpha = 0;
 
-        $this->assertEquals('oklch(0% 0 0deg / 0%)', $color->value);
+        $this->assertEquals('oklch(0% 0 0deg / 0%)', $instance->value);
 
-        $color->lightness = 50;
-        $color->chroma = 0.2;
-        $color->hue = 180;
-        $color->alpha = 50;
+        $instance->lightness = 50;
+        $instance->chroma = 0.2;
+        $instance->hue = 180;
+        $instance->alpha = 50;
 
-        $this->assertEquals('oklch(50% 0.2 180deg / 50%)', $color->value);
+        $this->assertEquals('oklch(50% 0.2 180deg / 50%)', $instance->value);
 
-        $color->lightness = 12.5;
-        $color->chroma = 0.125;
-        $color->hue = 37.5;
-        $color->alpha = 12.34;
+        $instance->lightness = 12.5;
+        $instance->chroma = 0.125;
+        $instance->hue = 37.5;
+        $instance->alpha = 12.34;
 
-        $this->assertEquals('oklch(12.5% 0.125 37.5deg / 12.34%)', $color->value);
+        $this->assertEquals('oklch(12.5% 0.125 37.5deg / 12.34%)', $instance->value);
     }
 
     public function testItShouldThrowAnErrorIfTheValueIsOutOfAllowedRange(): void
     {
-        $color = new ColorOklch('oklch(0 0 0)');
+        $instance = new ColorOklch('oklch(0 0 0)');
 
         try {
-            $color->lightness = 101;
+            $instance->lightness = 101;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->chroma = 2;
+            $instance->chroma = 2;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->hue = 361;
+            $instance->hue = 361;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->alpha = 101;
+            $instance->alpha = 101;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->lightness = -1;
+            $instance->lightness = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->chroma = -1;
+            $instance->chroma = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->hue = -1;
+            $instance->hue = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
         }
 
         try {
-            $color->alpha = -1;
+            $instance->alpha = -1;
             $this->fail();
         } catch (TypeVaultValidationError $error) {
             $this->assertInstanceOf(TypeVaultValidationError::class, $error);
@@ -216,8 +216,8 @@ class ColorOklchTest extends TestCase
 
     public function testItShouldAllowNullIfNullableIsSetToTrue(): void
     {
-        $color = new ColorOklch(null, new TypeOptionsDTO(nullable: true));
-        $this->assertNull($color->value);
+        $instance = new ColorOklch(null, new TypeOptionsDTO(nullable: true));
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsNullAndNullableIsFalse(): void
@@ -228,26 +228,26 @@ class ColorOklchTest extends TestCase
 
     public function testItShouldAllowValueChangeWhenImmutableIsFalse(): void
     {
-        $color = new ColorOklch('oklch(0% 0 0deg / 0%)', new TypeOptionsDTO(immutable: false));
+        $instance = new ColorOklch('oklch(0% 0 0deg / 0%)', new TypeOptionsDTO(immutable: false));
 
-        $newColorOklch = 'oklch(100% 0.4 360deg / 100%)';
+        $newInstance = 'oklch(100% 0.4 360deg / 100%)';
 
-        $color->value = $newColorOklch;
-        $this->assertEquals($newColorOklch, $color->value);
+        $instance->value = $newInstance;
+        $this->assertEquals($newInstance, $instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedAndImmutableIsTrue(): void
     {
-        $color = new ColorOklch('oklch(0% 0 0deg / 0%)', new TypeOptionsDTO(immutable: true));
+        $instance = new ColorOklch('oklch(0% 0 0deg / 0%)', new TypeOptionsDTO(immutable: true));
 
         $this->expectException(TypeVaultValidationError::class);
-        $color->value = 'oklch(100% 0.4 360deg / 100%)';
+        $instance->value = 'oklch(100% 0.4 360deg / 100%)';
     }
 
     public function testItShouldAllowNullIfNullableMethodIsUsed(): void
     {
-        $color = ColorOklch::nullable();
-        $this->assertNull($color->value);
+        $instance = ColorOklch::nullable();
+        $this->assertNull($instance->value);
     }
 
     public function testItShouldThrowExceptionWhenValueIsChangedWhenImmutableMethodIsUsed(): void
