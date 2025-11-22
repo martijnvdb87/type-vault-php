@@ -6,6 +6,90 @@ use Martijnvdb\TypeVault\DTOs\DateTimeValuesDTO;
 
 class DateTime extends BaseString
 {
+    public int $year {
+        get => $this->valueToDTO($this->value)->year;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['year' => $value])->__toString();
+        }
+    }
+
+    public int $month {
+        get => $this->valueToDTO($this->value)->month;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['month' => $value])->__toString();
+        }
+    }
+
+    public int $day {
+        get => $this->valueToDTO($this->value)->day;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['day' => $value])->__toString();
+        }
+    }
+
+    public int $hour {
+        get => $this->valueToDTO($this->value)->hour;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['hour' => $value])->__toString();
+        }
+    }
+
+    public int $minute {
+        get => $this->valueToDTO($this->value)->minute;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['minute' => $value])->__toString();
+        }
+    }
+
+    public int $second {
+        get => $this->valueToDTO($this->value)->second;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['second' => $value])->__toString();
+        }
+    }
+
+    public int $microsecond {
+        get => $this->valueToDTO($this->value)->microsecond;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['microsecond' => $value])->__toString();
+        }
+    }
+
     public static function fromDateTime(\DateTime $dateTime): self
     {
         $microsecondString = substr($dateTime->format('u'), 0, 3);
@@ -96,5 +180,28 @@ class DateTime extends BaseString
         }
 
         return $matches;
+    }
+
+    private function valueToDTO(string|null $value): DateTimeValuesDTO
+    {
+        if ($value === null) {
+            return new DateTimeValuesDTO();
+        }
+
+        $matches = $this->getComponents($value);
+
+        if (!$matches) {
+            return new DateTimeValuesDTO();
+        }
+
+        return (new DateTimeValuesDTO(
+            year: $matches["year"],
+            month: $matches["month"],
+            day: $matches["day"],
+            hour: $matches["hour"],
+            minute: $matches["minute"],
+            second: $matches["second"],
+            microsecond: $matches["microsecond"]
+        ));
     }
 }
