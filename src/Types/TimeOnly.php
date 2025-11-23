@@ -6,6 +6,54 @@ use Martijnvdb\TypeVault\DTOs\TimeOnlyValuesDTO;
 
 class TimeOnly extends BaseString
 {
+    public int $hour {
+        get => $this->valueToDTO($this->value)->hour;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['hour' => $value])->__toString();
+        }
+    }
+
+    public int $minute {
+        get => $this->valueToDTO($this->value)->minute;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['minute' => $value])->__toString();
+        }
+    }
+
+    public int $second {
+        get => $this->valueToDTO($this->value)->second;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['second' => $value])->__toString();
+        }
+    }
+
+    public int $microsecond {
+        get => $this->valueToDTO($this->value)->microsecond;
+
+        set(int $value) {
+            $this->assertMutable();
+
+            $values = $this->valueToDTO($this->value);
+
+            $this->value = $values->copyWith(['microsecond' => $value])->__toString();
+        }
+    }
+
     protected function validate(mixed $value): bool
     {
         if (!parent::validate($value)) {
@@ -91,5 +139,25 @@ class TimeOnly extends BaseString
         }
 
         return $matches;
+    }
+
+    private function valueToDTO(string|null $value): TimeOnlyValuesDTO
+    {
+        if ($value === null) {
+            return new TimeOnlyValuesDTO();
+        }
+
+        $matches = $this->getComponents($value);
+
+        if (!$matches) {
+            return new TimeOnlyValuesDTO();
+        }
+
+        return (new TimeOnlyValuesDTO(
+            hour: $matches["hour"],
+            minute: $matches["minute"],
+            second: $matches["second"],
+            microsecond: $matches["microsecond"]
+        ));
     }
 }
