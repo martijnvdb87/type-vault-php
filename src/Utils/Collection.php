@@ -33,6 +33,15 @@ class Collection
         get => count($this->value);
     }
 
+    public function concat(Collection $collection): void
+    {
+        if ($this->type !== $collection->type) {
+            throw new TypeVaultValidationError();
+        }
+
+        $this->push(...$collection->toArray());
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
