@@ -7,7 +7,7 @@ use Martijnvdb\TypeVault\Types\Type;
 
 class Collection
 {
-    protected readonly string $type;
+    protected readonly string $collectionType;
 
     /** @var array<Type> */
     protected array $value;
@@ -15,9 +15,9 @@ class Collection
     /**
      * @param array<Type> $value
      */
-    public function __construct(string $type, array $value)
+    public function __construct(string $type, array $value = [])
     {
-        $this->type = $type;
+        $this->collectionType = $type;
         $this->value = [];
 
         foreach ($value as $item) {
@@ -25,10 +25,18 @@ class Collection
         }
     }
 
+    public string $type {
+        get => $this->collectionType;
+    }
+
+    public int $length {
+        get => count($this->value);
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
-            if (!($item instanceof $this->type)) {
+            if (!($item instanceof $this->collectionType)) {
                 throw new TypeVaultValidationError();
             }
 
