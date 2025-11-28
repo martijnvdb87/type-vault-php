@@ -100,6 +100,22 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->every(fn($item) => $item instanceof FloatingPoint));
     }
 
+    public function testFilterMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $filtered = $collection->filter(fn($item) => $item->value < 3);
+
+        $this->assertEquals($filtered->toArray(), [
+            new Integer(1),
+            new Integer(2),
+        ]);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
