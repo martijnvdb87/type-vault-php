@@ -58,6 +58,11 @@ class Collection
         return new Collection($this->collectionType, array_filter($this->value, $callback));
     }
 
+    public function find(callable $callback): ?Type
+    {
+        return array_find($this->value, $callback);
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {

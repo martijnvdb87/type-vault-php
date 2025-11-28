@@ -116,6 +116,32 @@ class CollectionTest extends TestCase
         ]);
     }
 
+    public function testFindMethodReturnsItem(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $found = $collection->find(fn($item) => $item->value === 2);
+
+        $this->assertEquals($found, new Integer(2));
+    }
+
+    public function testFindMethodReturnsNull(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $found = $collection->find(fn($item) => $item->value === 4);
+
+        $this->assertNull($found);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
