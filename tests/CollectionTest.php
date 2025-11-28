@@ -78,6 +78,28 @@ class CollectionTest extends TestCase
         $collection->concat($other);
     }
 
+    public function testEveryMethodToReturnTrue(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $this->assertTrue($collection->every(fn($item) => $item instanceof Integer));
+    }
+
+    public function testEveryMethodToReturnFalse(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $this->assertFalse($collection->every(fn($item) => $item instanceof FloatingPoint));
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);

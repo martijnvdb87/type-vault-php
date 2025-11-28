@@ -42,6 +42,17 @@ class Collection
         $this->push(...$collection->toArray());
     }
 
+    public function every(callable $callback): bool
+    {
+        foreach ($this->value as $item) {
+            if (!$callback($item)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
