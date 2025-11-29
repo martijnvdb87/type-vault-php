@@ -139,6 +139,11 @@ class Collection
         return array_reverse($this->value);
     }
 
+    public function shift(): ?Type
+    {
+        return array_shift($this->value);
+    }
+
     /**
      * @return array<Type>
      */

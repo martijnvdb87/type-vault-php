@@ -299,6 +299,22 @@ class CollectionTest extends TestCase
         $this->assertEquals($collection->toArray(), [new Integer(1), new Integer(2), new Integer(3)]);
     }
 
+    public function testShiftMethod(): void
+    {
+        $item = new Integer(1);
+
+        $collection = new Collection(Integer::class, [
+            $item,
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $firstItem = $collection->shift();
+
+        $this->assertEquals($item, $firstItem);
+        $this->assertEquals(2, $collection->length);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
