@@ -81,6 +81,11 @@ class Collection
         }
     }
 
+    public function includes(Type $value): bool
+    {
+        return in_array($value, $this->value);
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
