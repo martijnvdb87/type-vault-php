@@ -235,6 +235,19 @@ class CollectionTest extends TestCase
         $this->assertNull($collection->lastIndexOf(new Integer(4)));
     }
 
+    public function testMapMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $mapped = $collection->map(fn($item) => $item->value * 2);
+
+        $this->assertEquals([2, 4, 6], $mapped);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);

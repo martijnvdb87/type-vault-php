@@ -102,6 +102,14 @@ class Collection
         return null;
     }
 
+    /**
+     * @return array<Type>
+     */
+    public function map(callable $callback): array
+    {
+        return array_map($callback, $this->value);
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
