@@ -50,14 +50,14 @@ class CollectionTest extends TestCase
 
         $collection->concat($other);
 
-        $this->assertEquals($collection->toArray(), [
+        $this->assertEquals([
             new Integer(1),
             new Integer(2),
             new Integer(3),
             new Integer(4),
             new Integer(5),
             new Integer(6),
-        ]);
+        ], $collection->toArray());
     }
 
     public function testConcatMethodThrowsExceptionWhenTypesDontMatch(): void
@@ -110,10 +110,10 @@ class CollectionTest extends TestCase
 
         $filtered = $collection->filter(fn($item) => $item->value < 3);
 
-        $this->assertEquals($filtered->toArray(), [
+        $this->assertEquals([
             new Integer(1),
             new Integer(2),
-        ]);
+        ], $filtered->toArray());
     }
 
     public function testFindMethodReturnsItem(): void
@@ -126,7 +126,7 @@ class CollectionTest extends TestCase
 
         $found = $collection->find(fn($item) => $item->value === 2);
 
-        $this->assertEquals($found, new Integer(2));
+        $this->assertEquals(new Integer(2), $found);
     }
 
     public function testFindMethodReturnsNull(): void
@@ -142,18 +142,44 @@ class CollectionTest extends TestCase
         $this->assertNull($found);
     }
 
+    public function testFindIndexMethodReturnsIndex(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $found = $collection->findIndex(fn($item) => $item->value === 2);
+
+        $this->assertEquals(1, $found);
+    }
+
+    public function testFindIndexMethodReturnsNull(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $found = $collection->findIndex(fn($item) => $item->value === 4);
+
+        $this->assertNull($found);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
-        $this->assertEquals($collection->length, 0);
+        $this->assertEquals(0, $collection->length);
 
         $collection->push(new Integer(1), new Integer(2), new Integer(3));
-        $this->assertEquals($collection->length, 3);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testTypeMethod(): void
     {
         $collection = new Collection(Integer::class);
-        $this->assertEquals($collection->type, Integer::class);
+        $this->assertEquals(Integer::class, $collection->type);
     }
 }

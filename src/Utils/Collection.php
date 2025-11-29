@@ -63,6 +63,17 @@ class Collection
         return array_find($this->value, $callback);
     }
 
+    public function findIndex(callable $callback): ?int
+    {
+        for ($i = 0; $i < count($this->value); $i++) {
+            if ($callback($this->value[$i])) {
+                return $i;
+            }
+        }
+
+        return null;
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
