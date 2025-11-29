@@ -168,6 +168,23 @@ class CollectionTest extends TestCase
         $this->assertNull($found);
     }
 
+    public function testForEachMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $result = [];
+
+        $collection->forEach(function ($item) use (&$result) {
+            $result[] = $item->value;
+        });
+
+        $this->assertEquals([1, 2, 3], $result);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);

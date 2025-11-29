@@ -74,6 +74,13 @@ class Collection
         return null;
     }
 
+    public function forEach(callable $callback): void
+    {
+        foreach ($this->value as $item) {
+            $callback($item);
+        }
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
