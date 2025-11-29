@@ -91,6 +91,17 @@ class Collection
         return array_search($value, $this->value) ?: null;
     }
 
+    public function lastIndexOf(Type $value): ?int
+    {
+        for ($i = count($this->value) - 1; $i >= 0; $i--) {
+            if ($this->value[$i] === $value) {
+                return $i;
+            }
+        }
+
+        return null;
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {

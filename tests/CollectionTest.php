@@ -215,6 +215,26 @@ class CollectionTest extends TestCase
         $this->assertNull($collection->indexOf(new Integer(4)));
     }
 
+    public function testLastIndexOfMethod(): void
+    {
+        $firstItem = new Integer(1);
+        $secondItem = new Integer(2);
+        $thirdItem = new Integer(3);
+
+        $collection = new Collection(Integer::class, [
+            $firstItem,
+            $secondItem,
+            $thirdItem,
+            $secondItem,
+            $firstItem,
+        ]);
+
+        $this->assertEquals(4, $collection->lastIndexOf($firstItem));
+        $this->assertEquals(3, $collection->lastIndexOf($secondItem));
+        $this->assertEquals(2, $collection->lastIndexOf($thirdItem));
+        $this->assertNull($collection->lastIndexOf(new Integer(4)));
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
