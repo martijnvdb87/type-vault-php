@@ -285,6 +285,20 @@ class CollectionTest extends TestCase
         $this->assertEquals(6, $result);
     }
 
+    public function testReverseMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $reversed = $collection->reverse();
+
+        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $reversed);
+        $this->assertEquals($collection->toArray(), [new Integer(1), new Integer(2), new Integer(3)]);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);

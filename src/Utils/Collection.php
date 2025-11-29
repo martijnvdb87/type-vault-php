@@ -134,6 +134,14 @@ class Collection
     /**
      * @return array<Type>
      */
+    public function reverse(): array
+    {
+        return array_reverse($this->value);
+    }
+
+    /**
+     * @return array<Type>
+     */
     public function toArray(): array
     {
         return $this->value;
