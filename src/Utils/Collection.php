@@ -86,6 +86,11 @@ class Collection
         return in_array($value, $this->value);
     }
 
+    public function indexOf(Type $value): ?int
+    {
+        return array_search($value, $this->value) ?: null;
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
