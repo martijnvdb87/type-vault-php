@@ -126,6 +126,11 @@ class Collection
         }
     }
 
+    public function reduce(callable $callback, mixed $initialValue): mixed
+    {
+        return array_reduce($this->value, $callback, $initialValue);
+    }
+
     /**
      * @return array<Type>
      */

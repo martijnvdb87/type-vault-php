@@ -264,6 +264,27 @@ class CollectionTest extends TestCase
         $this->assertEquals(2, $collection->length);
     }
 
+    public function testPushMethod(): void
+    {
+        $collection = new Collection(Integer::class);
+        $collection->push(new Integer(1), new Integer(2), new Integer(3));
+
+        $this->assertEquals(3, $collection->length);
+    }
+
+    public function testReduceMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $result = $collection->reduce(fn($carry, $item) => $carry + $item->value, 0);
+
+        $this->assertEquals(6, $result);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
