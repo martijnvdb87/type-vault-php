@@ -248,6 +248,22 @@ class CollectionTest extends TestCase
         $this->assertEquals([2, 4, 6], $mapped);
     }
 
+    public function testPopMethod(): void
+    {
+        $toBePopped = new Integer(3);
+
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            $toBePopped,
+        ]);
+
+        $item = $collection->pop();
+
+        $this->assertEquals($toBePopped, $item);
+        $this->assertEquals(2, $collection->length);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);

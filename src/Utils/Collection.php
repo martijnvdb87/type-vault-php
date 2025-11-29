@@ -110,6 +110,11 @@ class Collection
         return array_map($callback, $this->value);
     }
 
+    public function pop(): ?Type
+    {
+        return array_pop($this->value);
+    }
+
     public function push(Type ...$value): void
     {
         foreach ($value as $item) {
