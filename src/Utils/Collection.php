@@ -152,6 +152,18 @@ class Collection
     /**
      * @return array<Type>
      */
+    public function sort(callable|null $callback = null): array
+    {
+        $sorted = $this->value;
+
+        $callback ? usort($sorted, $callback) : sort($sorted);
+
+        return $sorted;
+    }
+
+    /**
+     * @return array<Type>
+     */
     public function toArray(): array
     {
         return $this->value;

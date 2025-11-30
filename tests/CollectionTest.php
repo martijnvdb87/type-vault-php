@@ -327,6 +327,24 @@ class CollectionTest extends TestCase
         $this->assertFalse($collection->some(fn($item) => $item->value === 4));
     }
 
+    public function testSortMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(3),
+            new Integer(1),
+            new Integer(2),
+        ]);
+
+        $sorted = $collection->sort();
+        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted);
+
+        $sorted = $collection->sort(fn($a, $b) => $b->value - $a->value);
+        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $sorted);
+
+        $sorted = $collection->sort(fn($a, $b) => $a->value - $b->value);
+        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted);
+    }
+
     public function testLengthMethod(): void
     {
         $collection = new Collection(Integer::class);
