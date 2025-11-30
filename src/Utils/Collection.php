@@ -186,4 +186,12 @@ class Collection
     {
         $this->value = array_merge($value, $this->value);
     }
+
+    /**
+     * @return array<Type>
+     */
+    public function values(): array
+    {
+        return $this->value;
+    }
 }

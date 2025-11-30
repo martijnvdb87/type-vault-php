@@ -388,6 +388,17 @@ class CollectionTest extends TestCase
         $this->assertEquals(3, $collection->length);
     }
 
+    public function testValuesMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $collection->values());
+    }
+
     public function testTypeMethod(): void
     {
         $collection = new Collection(Integer::class);
