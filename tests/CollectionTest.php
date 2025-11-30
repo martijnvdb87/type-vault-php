@@ -343,6 +343,20 @@ class CollectionTest extends TestCase
 
         $sorted = $collection->sort(fn($a, $b) => $a->value - $b->value);
         $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted);
+        $this->assertEquals($collection->toArray(), [new Integer(3), new Integer(1), new Integer(2)]);
+    }
+
+    public function testSpliceMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $spliced = $collection->splice(1, 1);
+        $this->assertEquals([new Integer(2)], $spliced);
+        $this->assertEquals(2, $collection->length);
     }
 
     public function testLengthMethod(): void

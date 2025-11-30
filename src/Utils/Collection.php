@@ -164,6 +164,14 @@ class Collection
     /**
      * @return array<Type>
      */
+    public function splice(int $start, int $deleteCount): array
+    {
+        return array_splice($this->value, $start, $deleteCount);
+    }
+
+    /**
+     * @return array<Type>
+     */
     public function toArray(): array
     {
         return $this->value;
