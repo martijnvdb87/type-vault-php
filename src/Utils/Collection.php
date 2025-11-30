@@ -144,6 +144,11 @@ class Collection
         return array_shift($this->value);
     }
 
+    public function some(callable $callback): bool
+    {
+        return array_find($this->value, $callback) !== null;
+    }
+
     /**
      * @return array<Type>
      */
