@@ -54,6 +54,11 @@ abstract class Type
         return $this->options->immutable;
     }
 
+    public function toString(): string
+    {
+        return json_encode($this->value);
+    }
+
     protected function assertMutable(): void
     {
         if ($this->isImmutable()) {

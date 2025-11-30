@@ -103,7 +103,7 @@ class Collection
     }
 
     /**
-     * @return array<Type>
+     * @return array<mixed>
      */
     public function map(callable $callback): array
     {
@@ -167,6 +167,11 @@ class Collection
     public function splice(int $start, int $deleteCount): array
     {
         return array_splice($this->value, $start, $deleteCount);
+    }
+
+    public function toString(): string
+    {
+        return join(', ', $this->map(fn($item) => $item->toString()));
     }
 
     /**
