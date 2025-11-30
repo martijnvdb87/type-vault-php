@@ -248,6 +248,15 @@ class CollectionTest extends TestCase
         $this->assertEquals([2, 4, 6], $mapped);
     }
 
+    public function testLengthMethod(): void
+    {
+        $collection = new Collection(Integer::class);
+        $this->assertEquals(0, $collection->length);
+
+        $collection->push(new Integer(1), new Integer(2), new Integer(3));
+        $this->assertEquals(3, $collection->length);
+    }
+
     public function testPopMethod(): void
     {
         $toBePopped = new Integer(3);
@@ -370,12 +379,12 @@ class CollectionTest extends TestCase
         $this->assertEquals('1, 2, 3', $collection->toString());
     }
 
-    public function testLengthMethod(): void
+    public function testUnshiftMethod(): void
     {
         $collection = new Collection(Integer::class);
-        $this->assertEquals(0, $collection->length);
+        $collection->unshift(new Integer(1));
+        $collection->unshift(new Integer(2), new Integer(3));
 
-        $collection->push(new Integer(1), new Integer(2), new Integer(3));
         $this->assertEquals(3, $collection->length);
     }
 

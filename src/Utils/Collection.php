@@ -169,16 +169,21 @@ class Collection
         return array_splice($this->value, $start, $deleteCount);
     }
 
-    public function toString(): string
-    {
-        return join(', ', $this->map(fn($item) => $item->toString()));
-    }
-
     /**
      * @return array<Type>
      */
     public function toArray(): array
     {
         return $this->value;
+    }
+
+    public function toString(): string
+    {
+        return join(', ', $this->map(fn($item) => $item->toString()));
+    }
+
+    public function unshift(Type ...$value): void
+    {
+        $this->value = array_merge($value, $this->value);
     }
 }
