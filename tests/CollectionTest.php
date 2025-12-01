@@ -304,8 +304,10 @@ class CollectionTest extends TestCase
 
         $reversed = $collection->reverse();
 
-        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $reversed);
-        $this->assertEquals($collection->toArray(), [new Integer(1), new Integer(2), new Integer(3)]);
+        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $reversed->values());
+        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $collection->toArray());
+
+        $this->assertEquals($collection, $reversed);
     }
 
     public function testShiftMethod(): void
@@ -345,14 +347,15 @@ class CollectionTest extends TestCase
         ]);
 
         $sorted = $collection->sort();
-        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted);
+        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted->toArray());
 
         $sorted = $collection->sort(fn($a, $b) => $b->value - $a->value);
-        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $sorted);
+        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $sorted->toArray());
 
         $sorted = $collection->sort(fn($a, $b) => $a->value - $b->value);
-        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted);
-        $this->assertEquals($collection->toArray(), [new Integer(3), new Integer(1), new Integer(2)]);
+        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted->toArray());
+
+        $this->assertEquals($collection, $sorted);
     }
 
     public function testSpliceMethod(): void
@@ -364,7 +367,7 @@ class CollectionTest extends TestCase
         ]);
 
         $spliced = $collection->splice(1, 1);
-        $this->assertEquals([new Integer(2)], $spliced);
+        $this->assertEquals([new Integer(2)], $spliced->toArray());
         $this->assertEquals(2, $collection->length);
     }
 

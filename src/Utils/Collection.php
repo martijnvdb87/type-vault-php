@@ -131,12 +131,12 @@ class Collection
         return array_reduce($this->value, $callback, $initialValue);
     }
 
-    /**
-     * @return array<Type>
-     */
-    public function reverse(): array
+    public function reverse(): Collection
     {
-        return array_reverse($this->value);
+        $reversed = array_reverse($this->value);
+        $this->value = $reversed;
+
+        return $this;
     }
 
     public function shift(): ?Type
@@ -149,24 +149,18 @@ class Collection
         return array_find($this->value, $callback) !== null;
     }
 
-    /**
-     * @return array<Type>
-     */
-    public function sort(callable|null $callback = null): array
+    public function sort(callable|null $callback = null): Collection
     {
-        $sorted = $this->value;
+        $callback ? usort($this->value, $callback) : sort($this->value);
 
-        $callback ? usort($sorted, $callback) : sort($sorted);
-
-        return $sorted;
+        return $this;
     }
 
-    /**
-     * @return array<Type>
-     */
-    public function splice(int $start, int $deleteCount): array
+    public function splice(int $start, int $deleteCount): Collection
     {
-        return array_splice($this->value, $start, $deleteCount);
+        $spliced = new Collection($this->collectionType, array_splice($this->value, $start, $deleteCount));
+
+        return $spliced;
     }
 
     /**
@@ -192,6 +186,6 @@ class Collection
      */
     public function values(): array
     {
-        return $this->value;
+        return $this->toArray();
     }
 }
