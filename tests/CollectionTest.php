@@ -78,6 +78,25 @@ class CollectionTest extends TestCase
         $collection->concat($other);
     }
 
+    public function testCloneMethod(): void
+    {
+        $collection = new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]);
+
+        $cloned = $collection->clone($collection);
+
+        $this->assertEquals($collection, $cloned);
+
+        $cloned->push(new Integer(4));
+
+        $this->assertNotEquals($collection, $cloned);
+        $this->assertEquals(3, $collection->length);
+        $this->assertEquals(4, $cloned->length);
+    }
+
     public function testEveryMethodToReturnTrue(): void
     {
         $collection = new Collection(Integer::class, [

@@ -42,6 +42,11 @@ class Collection
         $this->push(...$collection->toArray());
     }
 
+    public function clone(Collection $collection): Collection
+    {
+        return new Collection($collection->type, $collection->map(fn($item) => $item->clone()));
+    }
+
     public function every(callable $callback): bool
     {
         foreach ($this->value as $item) {
