@@ -48,7 +48,7 @@ class CollectionTest extends TestCase
             new Integer(6),
         ]);
 
-        $collection->concat($other);
+        $concatenated = $collection->concat($other);
 
         $this->assertEquals([
             new Integer(1),
@@ -57,7 +57,11 @@ class CollectionTest extends TestCase
             new Integer(4),
             new Integer(5),
             new Integer(6),
-        ], $collection->toArray());
+        ], $concatenated->toArray());
+
+        $this->assertEquals(6, $concatenated->length);
+        $this->assertEquals(3, $collection->length);
+        $this->assertEquals(3, $other->length);
     }
 
     public function testConcatMethodThrowsExceptionWhenTypesDontMatch(): void
@@ -86,7 +90,7 @@ class CollectionTest extends TestCase
             new Integer(3),
         ]);
 
-        $cloned = $collection->clone($collection);
+        $cloned = $collection->clone();
 
         $this->assertEquals($collection, $cloned);
 

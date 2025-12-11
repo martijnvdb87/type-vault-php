@@ -33,18 +33,21 @@ class Collection
         get => count($this->value);
     }
 
-    public function concat(Collection $collection): void
+    public function concat(Collection $collection): Collection
     {
         if ($this->type !== $collection->type) {
             throw new TypeVaultValidationError();
         }
 
-        $this->push(...$collection->toArray());
+        $cloned = $this->clone();
+        $cloned->push(...$collection->toArray());
+
+        return $cloned;
     }
 
-    public function clone(Collection $collection): Collection
+    public function clone(): Collection
     {
-        return new Collection($collection->type, $collection->map(fn($item) => $item->clone()));
+        return new Collection($this->type, $this->map(fn($item) => $item->clone()));
     }
 
     public function every(callable $callback): bool
