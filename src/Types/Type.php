@@ -59,6 +59,11 @@ abstract class Type
         return json_encode($this->value);
     }
 
+    public function clone(): Type
+    {
+        return new $this($this->value, $this->options->clone());
+    }
+
     protected function assertMutable(): void
     {
         if ($this->isImmutable()) {

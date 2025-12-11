@@ -31,4 +31,9 @@ readonly class DTO
         /** @phpstan-ignore-next-line */
         return new static(...$props);
     }
+
+    public function clone(): static
+    {
+        return $this->copyWith([]);
+    }
 }
