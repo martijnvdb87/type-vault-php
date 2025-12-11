@@ -378,6 +378,7 @@ class CollectionTest extends TestCase
 
         $this->assertTrue($collection->some(fn($item) => $item->value === 2));
         $this->assertFalse($collection->some(fn($item) => $item->value === 4));
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testSortMethod(): void
@@ -398,6 +399,7 @@ class CollectionTest extends TestCase
         $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $sorted->toArray());
 
         $this->assertEquals($collection, $sorted);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testSpliceMethod(): void
@@ -422,6 +424,7 @@ class CollectionTest extends TestCase
         ]);
 
         $this->assertEquals('1, 2, 3', $collection->toString());
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testUnshiftMethod(): void
@@ -442,6 +445,7 @@ class CollectionTest extends TestCase
         ]);
 
         $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $collection->values());
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testTypeMethod(): void
