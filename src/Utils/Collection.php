@@ -141,10 +141,10 @@ class Collection
 
     public function reverse(): Collection
     {
-        $reversed = array_reverse($this->value);
-        $this->value = $reversed;
+        $reversed = new Collection($this->collectionType, $this->value);
+        $reversed->value = array_reverse($reversed->value);
 
-        return $this;
+        return $reversed;
     }
 
     public function shift(): ?Type

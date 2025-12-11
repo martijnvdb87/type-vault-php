@@ -137,6 +137,9 @@ class CollectionTest extends TestCase
             new Integer(1),
             new Integer(2),
         ], $filtered->toArray());
+
+        $this->assertEquals(2, $filtered->length);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testFindMethodReturnsItem(): void
@@ -150,6 +153,7 @@ class CollectionTest extends TestCase
         $found = $collection->find(fn($item) => $item->value === 2);
 
         $this->assertEquals(new Integer(2), $found);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testFindMethodReturnsNull(): void
@@ -163,6 +167,7 @@ class CollectionTest extends TestCase
         $found = $collection->find(fn($item) => $item->value === 4);
 
         $this->assertNull($found);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testFindIndexMethodReturnsIndex(): void
@@ -176,6 +181,7 @@ class CollectionTest extends TestCase
         $found = $collection->findIndex(fn($item) => $item->value === 2);
 
         $this->assertEquals(1, $found);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testFindIndexMethodReturnsNull(): void
@@ -189,6 +195,7 @@ class CollectionTest extends TestCase
         $found = $collection->findIndex(fn($item) => $item->value === 4);
 
         $this->assertNull($found);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testForEachMethod(): void
@@ -206,6 +213,7 @@ class CollectionTest extends TestCase
         });
 
         $this->assertEquals([1, 2, 3], $result);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testIncludesMethod(): void
@@ -218,6 +226,7 @@ class CollectionTest extends TestCase
 
         $this->assertTrue($collection->includes(new Integer(2)));
         $this->assertFalse($collection->includes(new Integer(4)));
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testIndexOfMethod(): void
@@ -236,6 +245,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(1, $collection->indexOf($secondItem));
         $this->assertEquals(2, $collection->indexOf($thirdItem));
         $this->assertNull($collection->indexOf(new Integer(4)));
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testLastIndexOfMethod(): void
@@ -256,6 +266,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(3, $collection->lastIndexOf($secondItem));
         $this->assertEquals(2, $collection->lastIndexOf($thirdItem));
         $this->assertNull($collection->lastIndexOf(new Integer(4)));
+        $this->assertEquals(5, $collection->length);
     }
 
     public function testMapMethod(): void
@@ -269,6 +280,13 @@ class CollectionTest extends TestCase
         $mapped = $collection->map(fn($item) => $item->value * 2);
 
         $this->assertEquals([2, 4, 6], $mapped);
+        $this->assertEquals(3, $collection->length);
+
+        $this->assertEquals(new Collection(Integer::class, [
+            new Integer(1),
+            new Integer(2),
+            new Integer(3),
+        ]), $collection);
     }
 
     public function testLengthMethod(): void
@@ -315,6 +333,7 @@ class CollectionTest extends TestCase
         $result = $collection->reduce(fn($carry, $item) => $carry + $item->value, 0);
 
         $this->assertEquals(6, $result);
+        $this->assertEquals(3, $collection->length);
     }
 
     public function testReverseMethod(): void
@@ -328,9 +347,9 @@ class CollectionTest extends TestCase
         $reversed = $collection->reverse();
 
         $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $reversed->values());
-        $this->assertEquals([new Integer(3), new Integer(2), new Integer(1)], $collection->toArray());
+        $this->assertEquals([new Integer(1), new Integer(2), new Integer(3)], $collection->toArray());
 
-        $this->assertEquals($collection, $reversed);
+        $this->assertNotEquals($collection, $reversed);
     }
 
     public function testShiftMethod(): void
