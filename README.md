@@ -14,7 +14,7 @@
 Create a validated `Email` instance and access or update its value:
 
 ```php
-use Martijnvdb\TypeVault\Email;
+use Martijnvdb\TypeVault\Types\Email;
 
 $email = new Email("user@example.com");
 echo $email->value; // 'user@example.com'
@@ -29,7 +29,7 @@ echo $email->value; // 'foo@bar.com'
 Use `::nullable()` or pass `new TypeOptionsDTO(nullable: false)` to allow `null` as a valid value:
 
 ```php
-use Martijnvdb\TypeVault\Email;
+use Martijnvdb\TypeVault\Types\Email;
 
 $nullable = Email::nullable();
 // Or:
@@ -47,7 +47,7 @@ echo $nullable->value; // 'user@example.com'
 Use `::immutable()` or pass `new TypeOptionsDTO(immutable: true)` to prevent value changes after initialization:
 
 ```php
-use Martijnvdb\TypeVault\Email;
+use Martijnvdb\TypeVault\Types\Email;
 
 $immutable = Email::immutable("user@example.com");
 // Or:
